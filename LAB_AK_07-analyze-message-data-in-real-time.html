@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>LAB_AK_07-analyze-message-data-in-real-time</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<blockquote>
+<div><pre><code class="language-none">title: &#39;Lab 07: Device Message Routing&#39;
+module: &#39;Module 4: Message Processing and Analytics&#39;</code></pre></div>
+</blockquote>
+
+<h1 id="toc_0">Device Message Routing</h1>
+
+<h2 id="toc_1">Lab Scenario</h2>
+
+<p>Contoso Management is impressed with your implementation of automatic device enrollment using DPS. They are now interested in having you develop an IoT-based solution related to product packaging and shipping.</p>
+
+<p>The cost associated with packaging and shipping cheese is significant. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - cheese is cut and packaged, packages are assembled into shipping containers, containers are delivered to specific bins associated with their destination. A conveyor belt system is used to move the product through this process. The metric for success is the number of packages leaving the conveyor belt system during a given time period (typically a work shift).</p>
+
+<p>The conveyor belt system is a critical link in this process and is visually monitored to ensure that the workflow is progressing at maximum efficiency. The system has three operator controlled speeds: stopped, slow, and fast. Naturally, the number of packages being delivered at the low speed is less than at the higher speed. However, there are a number of other factors to consider:</p>
+
+<ul>
+<li>the vibration level of the conveyor belt system is much lower at the slow speed</li>
+<li>high vibration levels can cause packages to fall from the conveyor</li>
+<li>high vibration levels are known to accelerate wear-and-tear of the system</li>
+<li>when vibration levels exceed a threshold limit, the conveyor belt must be stopped to allow for inspection (to avoid more serious failures)</li>
+</ul>
+
+<p>In addition to maximizing throughput, your automated IoT solution will implement a form of preventive maintenance based on vibration levels, which will be used to detect early warning signs before serious system damage occurs.</p>
+
+<blockquote>
+<p><strong>Note</strong>: <strong>Preventive maintenance</strong> (sometimes called preventative maintenance or predictive maintenance) is an equipment maintenance program that schedules maintenance activities to be performed while the equipment is operating normally. The intent of this approach is to avoid unexpected breakdowns that often incur costly disruptions.</p>
+</blockquote>
+
+<p>It&#39;s not always easy for an operator to visually detect abnormal vibration levels. For this reason, you are looking into an Azure IoT solution that will help to measure vibration levels and data anomalies. Vibration sensors will be attached to the conveyor belt at various locations, and you will use IoT devices to send telemetry to IoT hub. The IoT hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to alert you to vibration anomalies in real time. You also plan to archive all of the telemetry data so that in-house machine learning models can be developed in the future.</p>
+
+<p>You decide to prototype the solution using simulated telemetry from a single IoT device.</p>
+
+<p>To simulate the vibration data in a realistic manner, you work with an engineer from Operations to understand a little bit about what causes the vibrations. It turns out there are a number of different types of vibration that contribute to the overall vibration level. For example, a &quot;force vibration&quot; could be introduced by a broken guide wheel or an especially heavy load placed improperly on the conveyor belt. There&#39;s also an &quot;increasing vibration&quot;, that can be introduced when a system design limit (such as speed or weight) is exceeded. The Engineering team agrees to help you develop the code for a simulated IoT device that will produce an acceptable representation of vibration data (including anomalies).</p>
+
+<p>The following resources will be created:</p>
+
+<p><img src="media/LAB_AK_07-architecture.png" alt="Lab 7 Architecture"></p>
+
+<h2 id="toc_2">In This Lab</h2>
+
+<p>In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a simulated device that sends vibration telemetry to your IoT hub. With your simulated data arriving at IoT hub, you will implement an IoT Hub Message Route and Azure Stream Analytics job that can be used to archive data. The lab includes the following exercises:</p>
+
+<ul>
+<li>Configure Lab Prerequisites (required Azure resources)</li>
+<li>Write Code to generate Vibration Telemetry</li>
+<li>Create a Message Route to Azure Blob Storage</li>
+<li>Logging Route Azure Stream Analytics Job</li>
+</ul>
+
+<h2 id="toc_3">Lab Instructions</h2>
+
+<h3 id="toc_4">Exercise 1: Configure Lab Prerequisites</h3>
+
+<p>This lab assumes that the following Azure resources are available:</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Resource Type</th>
+<th style="text-align: left">Resource Name</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td style="text-align: left">Resource Group</td>
+<td style="text-align: left">rg-az220</td>
+</tr>
+<tr>
+<td style="text-align: left">IoT Hub</td>
+<td style="text-align: left">iot-az220-training-{your-id}</td>
+</tr>
+<tr>
+<td style="text-align: left">Device ID</td>
+<td style="text-align: left">sensor-v-3000</td>
+</tr>
+</tbody>
+</table>
+
+<p>To ensure these resources are available, complete the following steps.</p>
+
+<ol>
+<li><p>In the virtual machine environment, open a Microsoft Edge browser window, and then navigate to the following Web address:</p>
+
+<p>+++https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fmaster%2FAllfiles%2FARM%2Flab07.json+++</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Whenever you see the green &quot;T&quot; symbol, for example +++enter this text+++, you can click the associated text and the information will be typed into the current field within the virtual machine environment.</p>
+</blockquote></li>
+<li><p>If prompted to log in to the Azure portal, enter the Azure credentials that you are using for this course.</p>
+
+<p>The <strong>Custom deployment</strong> page will be displayed.</p></li>
+<li><p>Under <strong>Project details</strong>, in the <strong>Subscription</strong> dropdown, ensure that the Azure subscription that you intend to use for this course is selected.</p></li>
+<li><p>In the <strong>Resource group</strong> dropdown, select <strong>rg-az220</strong>.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: If <strong>rg-az220</strong> is not listed:</p>
+
+<ol>
+<li>Under the <strong>Resource group</strong> dropdown, click <strong>Create new</strong>.</li>
+<li>Under <strong>Name</strong>, enter <strong>rg-az220</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+</blockquote></li>
+<li><p>Under <strong>Instance details</strong>, in the <strong>Region</strong> dropdown, select the region closest to you.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: If the <strong>rg-az220</strong> group already exists, the <strong>Region</strong> field is set to the region used by the resource group and is read-only.</p>
+</blockquote></li>
+<li><p>In the <strong>Your ID</strong> field, enter the unique ID you created in Exercise 1.</p></li>
+<li><p>In the <strong>Course ID</strong> field, enter <strong>az220</strong>.</p></li>
+<li><p>To validate the template, click <strong>Review and create</strong>.</p></li>
+<li><p>If validation passes, click <strong>Create</strong>.</p>
+
+<p>The deployment will start.</p></li>
+<li><p>Once the deployment has completed, in the left navigation area, to review any output values from the template,  click <strong>Outputs</strong>.</p>
+
+<p>Make a note of the outputs for use later:</p>
+
+<ul>
+<li>connectionString</li>
+<li>deviceConnectionString</li>
+</ul></li>
+</ol>
+
+<p>The resources have now been created.</p>
+
+<h3 id="toc_5">Exercise 2: Write Code to generate Vibration Telemetry</h3>
+
+<p>Both long term and real-time data analysis are required to automate the monitoring of Contoso&#39;s conveyor belt system and enable predictive maintenance. Since no historical data exists, your first step will be to generate simulated data that mimics vibration data and data anomalies in a realistic manner. Contoso engineers have developed an algorithm to simulate vibration over time and embedded the algorithm within a code class that you will implement. The engineers have agreed to support any future updates required to adjust the algorithms.</p>
+
+<p>During your initial prototype phase, you will implement a single IoT device that generates telemetry data. In addition to the vibration data, your device will create some additional values (packages delivered, ambient temperature, and similar metrics) that will be sent to Blob storage. This additional data simulates the data that will be used to develop machine learning modules for predictive maintenance.</p>
+
+<p>In this exercise, you will:</p>
+
+<ul>
+<li>load the simulated device project</li>
+<li>update the connection string for your simulated device and review the project code</li>
+<li>test your simulated device connection and telemetry communications</li>
+<li>ensure that telemetry is arriving at your IoT hub</li>
+</ul>
+
+<h4 id="toc_6">Task 1: Open your simulated device project</h4>
+
+<ol>
+<li><p>Open <strong>Visual Studio Code</strong>.</p></li>
+<li><p>On the <strong>File</strong> menu, click <strong>Open Folder</strong>.</p></li>
+<li><p>In the <strong>Open Folder</strong> dialog, navigate to the <strong>07-Device Message Routing</strong> folder.</p>
+
+<p>In <em>Lab 3: Setup the Development Environment</em>, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:</p>
+
+<ul>
+<li>Allfiles
+
+<ul>
+<li>Labs
+
+<ul>
+<li>07-Device Message Routing
+
+<ul>
+<li>Starter
+
+<ul>
+<li>VibrationDevice</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Navigate to the <strong>Starter</strong> folder for Lab 7.</p></li>
+<li><p>Click <strong>VibrationDevice</strong>, and then click <strong>Select Folder</strong>.</p>
+
+<p>You should see the following files listed in the EXPLORER pane of Visual Studio Code:</p>
+
+<ul>
+<li>Program.cs</li>
+<li>VibrationDevice.csproj</li>
+</ul>
+
+<blockquote>
+<p><strong>Note</strong>: If you are prompted to load required assets, you can do that now.</p>
+</blockquote></li>
+<li><p>In the <strong>EXPLORER</strong> pane, click <strong>Program.cs</strong>.</p>
+
+<p>A cursory glance will reveal that the <strong>VibrationDevice</strong> application is very similar to those used in the preceding labs. This version of the application uses symmetric Key authentication, sends both telemetry and logging messages to the IoT Hub, and has a more complex sensor implementation.</p></li>
+<li><p>On the <strong>Terminal</strong> menu, click <strong>New Terminal</strong>.</p>
+
+<p>Examine the directory path indicated as part of the command prompt to ensure that you are in the correct location. You do not want to start building this project within the folder structure of a previous lab project.</p></li>
+<li><p>At the terminal command prompt, to verify that the application builds without errors, enter the following command:</p>
+
+<div><pre><code class="language-cmd">dotnet build</code></pre></div>
+
+<p>The output will be similar to:</p>
+
+<div><pre><code class="language-text">❯ dotnet build
+Microsoft (R) Build Engine version 16.5.0+d4cbfca49 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Restore completed in 39.27 ms for D:\Az220-Code\AllFiles\Labs\07-Device Message Routing\Starter\VibrationDevice\VibrationDevice.csproj.
+VibrationDevice -&gt; D:\Az220-Code\AllFiles\Labs\07-Device Message Routing\Starter\VibrationDevice\bin\Debug\netcoreapp3.1\VibrationDevice.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.16</code></pre></div></li>
+</ol>
+
+<p>In the next task, you will configure the connection string and review the application.</p>
+
+<h4 id="toc_7">Task 2: Configure connection and review code</h4>
+
+<p>The simulated device app that you will build in this task simulates an IoT device that is monitoring the conveyor belt. The app will simulate sensor readings and report vibration sensor data every two seconds.</p>
+
+<ol>
+<li><p>Ensure that you have the <strong>Program.cs</strong> file opened in Visual Studio Code.</p></li>
+<li><p>Near the top of the <strong>Program</strong> class, locate the declaration of the <code>deviceConnectionString</code> variable:</p>
+
+<div><pre><code class="language-csharp">private readonly static string deviceConnectionString = &quot;&lt;your device connection string&gt;&quot;;</code></pre></div></li>
+<li><p>Replace <code>&lt;your device connection string&gt;</code> with the device connection string that you saved earlier.</p>
+
+<blockquote>
+<p><strong>Note</strong>: This is the only change that you are required to make to this code.</p>
+</blockquote></li>
+<li><p>On the <strong>File</strong> menu, click <strong>Save</strong>.</p></li>
+<li><p>Optionally, take a moment to review the code.</p></li>
+</ol>
+
+<h4 id="toc_8">Task 3: Test your code to send telemetry</h4>
+
+<ol>
+<li><p>At the Terminal command prompt, to run the app, enter the following command:</p>
+
+<div><pre><code class="language-bash">dotnet run</code></pre></div>
+
+<p>This command will run the <strong>Program.cs</strong> file in the current folder.</p></li>
+<li><p>Console output should be displayed that is similar to the following:</p>
+
+<div><pre><code class="language-text">Vibration sensor device app.
+
+Telemetry data: {&quot;vibration&quot;:0.0}
+Telemetry sent 10:29 AM
+Log data: {&quot;vibration&quot;:0.0,&quot;packages&quot;:0,&quot;speed&quot;:&quot;stopped&quot;,&quot;temp&quot;:60.22}
+Log data sent
+
+Telemetry data: {&quot;vibration&quot;:0.0}
+Telemetry sent 10:29 AM
+Log data: {&quot;vibration&quot;:0.0,&quot;packages&quot;:0,&quot;speed&quot;:&quot;stopped&quot;,&quot;temp&quot;:59.78}
+Log data sent</code></pre></div>
+
+<blockquote>
+<p><strong>Note</strong>:  In the Terminal window, green text is used to show things are working as they should and red text when bad stuff is happening. If you receive error messages, start by checking your device connection string.</p>
+</blockquote></li>
+<li><p>Leave this app running for the next task.</p>
+
+<p>If you won&#39;t be continuing to the next task, you can enter <strong>Ctrl-C</strong> in the Terminal window to stop the app. You can start it again later by using the <code>dotnet run</code> command.</p></li>
+</ol>
+
+<h4 id="toc_9">Task 4: Verify the IoT Hub is Receiving Telemetry</h4>
+
+<p>In this task, you will use the Azure portal to verify that your IoT Hub is receiving telemetry.</p>
+
+<ol>
+<li><p>Open the <a href="https://portal.azure.com">Azure Portal</a>.</p></li>
+<li><p>On your Resources tile, click <strong>iot-az220-training-{your-id}</strong>.</p></li>
+<li><p>On the <strong>Overview</strong> pane, scroll down to view the metrics tiles.</p></li>
+<li><p>Adjacent to <strong>Show data for last</strong>, change the time range to one hour.</p>
+
+<p>The <strong>Device to cloud messages</strong> tile should be plotting some current activity. If no activity is shown, wait a short while, as there&#39;s some latency.</p>
+
+<p>With your device pumping out telemetry, and your hub receiving it, the next step is to route the messages to their correct endpoints.</p></li>
+</ol>
+
+<h3 id="toc_10">Exercise 3: Create a Message Route to Azure Blob Storage</h3>
+
+<p>IoT solutions often require that incoming message data be sent to multiple endpoint locations, either dependent upon the type of data or for business reasons. Azure IoT hub provides the <em>message routing</em> feature to enable you to direct incoming data to locations required by your solution.</p>
+
+<p>The architecture of our system requires data be sent to two destinations: a storage location for archiving data, and a location for more immediate analysis.</p>
+
+<p>Contoso&#39;s vibration monitoring scenario requires you to create two message routes:</p>
+
+<ul>
+<li>the first route will be to an Azure Blob storage location for data archiving</li>
+<li>the second route will be to an Azure Stream Analytics job for real-time analysis</li>
+</ul>
+
+<p>Message routes should be built and tested one at a time, so this exercise will focus on the storage route. This route will be referred to as the &quot;logging&quot; route, and it involves digging a few levels deep into the creation of Azure resources.</p>
+
+<p>One important feature of message routing is the ability to filter incoming data before routing to an endpoint. The filter, written as a SQL query, directs output through a route only when certain conditions are met.</p>
+
+<p>One of the easiest ways to filter data is to evaluate a message property. You may recall adding message properties to your device messages in the previous exercise. The code that you added looked like the following:</p>
+
+<div><pre><code class="language-csharp">...
+telemetryMessage.Properties.Add(&quot;sensorID&quot;, &quot;VSTel&quot;);
+...
+loggingMessage.Properties.Add(&quot;sensorID&quot;, &quot;VSLog&quot;);</code></pre></div>
+
+<p>You can now embed a SQL query within your message route that uses <code>sensorID</code> as a criteria for the route. In this case, when the value assigned to <code>sensorID</code> is <code>VSLog</code> (vibration sensor log), the message is intended for the storage archive.</p>
+
+<p>In this exercise, you will create and test the logging route.</p>
+
+<h4 id="toc_11">Task 1: Define the message routing endpoint</h4>
+
+<ol>
+<li><p>In the <a href="https://portal.azure.com/">Azure Portal</a>, ensure that your IoT hub blade is open.</p></li>
+<li><p>On the left-hand menu, under <strong>Hub settings</strong>, click <strong>Message routing</strong>.</p></li>
+<li><p>On the <strong>Message routing</strong> pane, ensure that the <strong>Routes</strong> tab is selected.</p></li>
+<li><p>To add a new route, click <strong>+ Add</strong>.</p>
+
+<p>The <strong>Add a route</strong> blade should now be displayed.</p></li>
+<li><p>On the <strong>Add a route</strong> blade, under <strong>Name</strong>, enter <strong>vibrationLoggingRoute</strong></p></li>
+<li><p>To the right of <strong>Endpoint</strong>, click <strong>+ Add endpoint</strong>, and then, in the drop-down list, click <strong>Storage</strong>.</p>
+
+<p>The <strong>Add a storage endpoint</strong> blade should now be displayed.</p></li>
+<li><p>On the <strong>Add a storage endpoint</strong> blade, under <strong>Endpoint name</strong>, enter <strong>vibrationLogEndpoint</strong></p></li>
+<li><p>To display a list of Storage accounts associated with your subscription, click <strong>Pick a container</strong>.</p>
+
+<p>A list of the storage accounts already present in the Azure Subscription is listed. At this point you could select an existing storage account and container, however, for this lab you will create a new one.</p></li>
+<li><p>To begin creating a storage account, click <strong>+ Storage account</strong>.</p>
+
+<p>The <strong>Create storage account</strong> blade should now be displayed.</p></li>
+<li><p>On the <strong>Create storage account</strong> blade, under <strong>Name</strong>, enter <strong>vibrationstore{your-id}</strong></p>
+
+<p>For example: <strong>vibrationstorecah191211</strong></p>
+
+<blockquote>
+<p><strong>Note</strong>:  This field can only contain lower-case letters and numbers, must be between 3 and 24 characters, and must be unique.</p>
+</blockquote></li>
+<li><p>In the <strong>Account kind</strong> dropdown, click <strong>StorageV2 (general purpose v2)</strong>.</p></li>
+<li><p>Under <strong>Performance</strong>, ensure that <strong>Standard</strong> is selected.</p>
+
+<p>This keeps costs down at the expense of overall performance.</p></li>
+<li><p>Under <strong>Replication</strong>, ensure that <strong>Locally-redundant storage (LRS)</strong> is selected.</p>
+
+<p>This keeps costs down at the expense of risk mitigation for disaster recovery. In production your solution may require a more robust replication strategy.</p></li>
+<li><p>Under <strong>Location</strong>, select the region that you are using for the labs in this course.</p></li>
+<li><p>Under <strong>Minimum TLS version</strong>, ensure <strong>Version 1.2</strong> is selected.</p></li>
+<li><p>To create the storage account endpoint, click <strong>OK</strong>.</p></li>
+<li><p>Wait until the request is validated and the storage account deployment has completed.</p>
+
+<p>Validation and creation can take a minute or two.</p>
+
+<p>Once completed, the <strong>Create storage account</strong> blade will close and the <strong>Storage accounts</strong> blade will be displayed. The Storage accounts blade should have auto-updated to show the storage account that was just created.</p></li>
+</ol>
+
+<h4 id="toc_12">Task 2: Define the storage account container</h4>
+
+<ol>
+<li><p>On the <strong>Storage accounts</strong> blade, click <strong>vibrationstore{your-id}</strong>.</p>
+
+<p>The <strong>Containers</strong> blade should appear. Since this is a new storage account, there are no containers listed.</p></li>
+<li><p>To create a container, click <strong>+ Container</strong>.</p>
+
+<p>The <strong>New container</strong> dialog should now be displayed.</p></li>
+<li><p>On the <strong>New container</strong> dialog, under <strong>Name</strong>, enter <strong>vibrationcontainer</strong></p>
+
+<p>Again, only lower-case letters and numbers are accepted.</p></li>
+<li><p>Under <strong>Public access level</strong>, ensure that <strong>Private (no anonymous access)</strong> is selected.</p></li>
+<li><p>To create the container, click <strong>Create</strong>.</p>
+
+<p>After a moment the <strong>Lease state</strong> for your container will update to display <strong>Available</strong>.</p></li>
+<li><p>To choose this container for your solution, click <strong>vibrationcontainer</strong>, and then click <strong>Select</strong>.</p>
+
+<p>You should be returned to the <strong>Add a storage endpoint</strong> blade. Notice that the <strong>Azure Storage container</strong> has been set to the URL for the storage account and container you just created.</p></li>
+<li><p>Leave the <strong>Batch frequency</strong> and <strong>Chunk size window</strong> fields set to their default values of <strong>100</strong>.</p></li>
+<li><p>Under <strong>Encoding</strong>, notice that there are two options and that <strong>AVRO</strong> is selected.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  By default IoT Hub writes the content in Avro format, which has both a message body property and a message property. The Avro format is not used for any other endpoints. Although the Avro format is great for data and message preservation, it&#39;s a challenge to use it to query data. In comparison, JSON or CSV format is much easier for querying data. IoT Hub now supports writing data to Blob storage in JSON as well as AVRO.</p>
+</blockquote></li>
+<li><p>Take a moment to examine the value specified in <strong>File name format</strong> field.</p>
+
+<p>The <strong>File name format</strong> field specifies the pattern used to write the data to files in storage. The various tokens are replace with values as the file is created.</p></li>
+<li><p>At the bottom of the blade, to create your storage endpoint, click <strong>Create</strong>.</p>
+
+<p>Validation and subsequent creation will take a few moments. Once complete, you should be located back on the <strong>Add a route</strong> blade.</p>
+
+<p>Notice that the <strong>Endpoint</strong> is now populated.</p>
+
+<h4 id="toc_13">Task 3: Define the routing query</h4></li>
+<li><p>On the <strong>Add a route</strong> blade, under <strong>Data source</strong>, ensure that <strong>Device Telemetry Messages</strong> is selected.</p></li>
+<li><p>Under <strong>Enable route</strong>, ensure that <strong>Enable</strong> is selected.</p></li>
+<li><p>Under <strong>Routing query</strong>, replace <strong>true</strong> with the query below:</p>
+
+<div><pre><code class="language-sql">sensorID = &#39;VSLog&#39;</code></pre></div>
+
+<p>This query ensures that only messages with the <code>sensorID</code> application property set to <code>VSLog</code> will be routed to the storage endpoint.</p></li>
+<li><p>To save this route, click <strong>Save</strong>.</p>
+
+<p>Wait for the success message. Once completed, the route should be listed on the <strong>Message routing</strong> pane.</p></li>
+<li><p>Navigate back to your Azure portal Dashboard.</p></li>
+</ol>
+
+<h4 id="toc_14">Task 4: Verify Data Archival</h4>
+
+<ol>
+<li><p>Ensure that the device app you created in Visual Studio Code is still running.</p>
+
+<p>If not, run it in the Visual Studio Code terminal using <code>dotnet run</code>.</p></li>
+<li><p>On your Resources tile, to open you Storage account blade, click <strong>vibrationstore{your-id}</strong>.</p>
+
+<p>If your Resources tile does not list your Storage account, click the <strong>Refresh</strong> button at the top of the resource group tile, and then follow the instruction above to open your storage account.</p></li>
+<li><p>On the left-side menu of your <strong>vibrationstore{your-id}</strong> blade, click <strong>Storage Browser (preview)</strong>.</p>
+
+<p>You can use the Storage Explorer to verify that your data is being added to the storage account.</p>
+
+<blockquote>
+<p><strong>Note</strong>: The Storage Explorer is currently in preview mode, so its exact mode of operation may change.</p>
+</blockquote></li>
+<li><p>In <strong>Storage Explorer (preview)</strong> pane, expand <strong>BLOB CONTAINERS</strong>, and then click <strong>vibrationcontainer</strong>.</p>
+
+<p>To view the data, you will need to navigate down a hierarchy of folders. The first folder will be named for the IoT Hub.</p>
+
+<blockquote>
+<p><strong>Note</strong>: If no data is displayed, wait a few moments and try again.</p>
+</blockquote></li>
+<li><p>In the right-hand pane, under <strong>NAME</strong>, double-click <strong>iot-az220-training-{your-id}</strong>, and then use double-clicks to navigate down into the hierarchy.</p>
+
+<p>Under your IoT hub folder, you will see folders for the Partition, then numeric values for the Year, Month, and Day. The final folder represents the Hour, listed in UTC time. The Hour folder will contain a number of Block Blobs that contain your logging message data.</p></li>
+<li><p>Double-click the Block Blob for the data with the earliest time stamp.</p></li>
+<li><p>Click the <strong>Download</strong> menu at the top.</p>
+
+<p>A file named <strong>{day_num}.avro</strong> (i.e. <strong>22.avro</strong>) will be downloaded to the <strong>Downloads</strong> folder.</p></li>
+<li><p>Open the downloaded file with <strong>Visual Studio Code</strong> and click <strong>Do you want to open it anyway</strong>.</p>
+
+<p>Although the data is not formatted in a way that is easy to read, you should be able to recognize it as your vibration messages.</p></li>
+<li><p>Close the <strong>Visual Studio Code</strong> document containing your data.</p></li>
+<li><p>Return to your Azure portal Dashboard..</p></li>
+</ol>
+
+<h3 id="toc_15">Exercise 4: Logging Route Azure Stream Analytics Job</h3>
+
+<p>In this exercise, you will create a Stream Analytics job that outputs logging messages to Blob storage. You will then use Storage Explorer in the Azure Portal to view the stored data.</p>
+
+<p>This will enable you to verify that your route includes the following settings:</p>
+
+<ul>
+<li><strong>Name</strong> - vibrationLoggingRoute</li>
+<li><strong>Data Source</strong> - DeviceMessages</li>
+<li><strong>Routing query</strong> - sensorID = &#39;VSLog&#39;</li>
+<li><strong>Endpoint</strong> - vibrationLogEndpoint</li>
+<li><strong>Enabled</strong> - true</li>
+</ul>
+
+<blockquote>
+<p><strong>Note</strong>: It may seem odd that in this lab you are routing data to storage, and then also sending your data to storage through Azure Stream Analytics. In a production scenario, you wouldn&#39;t have both paths long-term. Instead, it is likely that the second path that we&#39;re creating here would not exist. You will use it here, in a lab environment, as a way to validate that your routing is working as expected and to show a simple implementation of Azure Stream Analytics.</p>
+</blockquote>
+
+<h4 id="toc_16">Task 1: Create the Stream Analytics Job</h4>
+
+<ol>
+<li><p>On the Azure portal menu, click <strong>+ Create a resource</strong>.</p></li>
+<li><p>On the <strong>New</strong> blade, in the <strong>Search the Marketplace</strong> textbox, type <strong>stream analytics</strong> and then click <strong>Stream Analytics job</strong>.</p></li>
+<li><p>On the <strong>Stream Analytics job</strong> blade, click <strong>Create</strong>.</p>
+
+<p>The <strong>New Stream Analytics job</strong> pane is displayed.</p></li>
+<li><p>On the <strong>New Stream Analytics job</strong> pane, under <strong>Name</strong>, enter <strong>vibrationJob</strong>.</p></li>
+<li><p>Under <strong>Subscription</strong>, choose the subscription you are using for the lab.</p></li>
+<li><p>Under <strong>Resource group</strong>, select <strong>rg-az220</strong>.</p></li>
+<li><p>Under <strong>Location</strong>, select the region that you are using for the labs in this course.</p></li>
+<li><p>Under <strong>Hosting environment</strong>, ensure that <strong>Cloud</strong> is selected.</p>
+
+<p>Edge hosting will be discussed later in the course.</p></li>
+<li><p>Under <strong>Streaming units</strong>, reduce the number from <strong>3</strong> to <strong>1</strong>.</p>
+
+<p>This lab does not require 3 units and this will reduce costs.</p></li>
+<li><p>To create the Stream Analytics job, click <strong>Create</strong>.</p></li>
+<li><p>Wait for the <strong>Deployment succeeded</strong> message, then open the new resource.</p>
+
+<blockquote>
+<p><strong>Tip:</strong> If you miss the message to go to the new resource, or need to find a resource at any time, select <strong>Home/All resources</strong>. Enter enough of the resource name for it to appear in the list of resources.</p>
+</blockquote></li>
+<li><p>Take a moment to examine your new Stream Analytics job.</p>
+
+<p>Notice that you have an empty job, showing no inputs or outputs, and a skeleton query. The next step is to populate these entries.</p></li>
+</ol>
+
+<h4 id="toc_17">Task 2: Create the Stream Analytics Job Input</h4>
+
+<ol>
+<li><p>On the left-side menu under <strong>Job topology</strong>, click <strong>Inputs</strong>.</p>
+
+<p>The <strong>Inputs</strong> pane will be displayed.</p></li>
+<li><p>On the <strong>Inputs</strong> pane, click <strong>+ Add stream input</strong>, and then click <strong>IoT Hub</strong>.</p>
+
+<p>The <strong>IoT Hub - New input</strong> pane will be displayed.</p></li>
+<li><p>On the <strong>IoT Hub - New input</strong> pane, under <strong>Input alias</strong>, enter <code>vibrationInput</code>.</p></li>
+<li><p>Ensure that <strong>Select IoT Hub from your subscriptions</strong> is selected.</p></li>
+<li><p>Under <strong>IoT Hub</strong>, ensure that your <strong>iot-az220-training-{your-id}</strong> IoT hub is selected.</p></li>
+<li><p>Under <strong>Subscription</strong>, ensure that the subscription you used to create the IoT Hub earlier is selected.</p></li>
+<li><p>Under <strong>IoT Hub</strong>, ensure that your <strong>iot-az220-training-{your-id}</strong> IoT hub is selected.</p></li>
+<li><p>Under <strong>Consumer group</strong>, ensure that <strong>$Default</strong> is selected.</p></li>
+<li><p>Under <strong>Shared access policy name</strong>, ensure that <strong>iothubowner</strong> is selected.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  The <strong>Shared access policy key</strong> is populated and read-only.</p>
+</blockquote></li>
+<li><p>Under <strong>Endpoint</strong>, ensure that <strong>Messaging</strong> is selected.</p></li>
+<li><p>Leave <strong>Partition key</strong> blank.</p></li>
+<li><p>Under <strong>Event serialization format</strong>, ensure that <strong>JSON</strong> is selected.</p></li>
+<li><p>Under <strong>Encoding</strong>, ensure that <strong>UTF-8</strong> is selected.</p>
+
+<p>You may need to scroll down to see some of the fields.</p></li>
+<li><p>Under <strong>Event compression type</strong>, ensure <strong>None</strong> is selected.</p></li>
+<li><p>To save the new input, click <strong>Save</strong>, and then wait for the input to be created.</p>
+
+<p>The <strong>Inputs</strong> list should be updated to show the new input.</p></li>
+</ol>
+
+<h4 id="toc_18">Task 3: Create the Stream Analytics Job Output</h4>
+
+<ol>
+<li><p>To create an output, on the left-side menu under <strong>Job topology</strong>, click <strong>Outputs</strong>.</p>
+
+<p>The <strong>Outputs</strong> pane is displayed.</p></li>
+<li><p>On the <strong>Outputs</strong> pane, click <strong>+ Add</strong>, and then click <strong>Blob storage/ADLS Gen2</strong>.</p>
+
+<p>The <strong>Blob storage/ADLS Gen2 - New output</strong> pane is displayed.</p></li>
+<li><p>On the <strong>Blob storage/ADLS Gen2 - New output</strong> pane, under <strong>Output alias</strong>, enter <code>vibrationOutput</code>.</p></li>
+<li><p>Ensure that <strong>Select Blob storage/ADLS Gen2 from your subscriptions</strong> is selected.</p></li>
+<li><p>Under <strong>Subscription</strong>, select the subscription you are using for this lab.</p></li>
+<li><p>Under <strong>Storage account</strong>, click <strong>vibrationstore{your-id}</strong>.</p></li>
+<li><p>Under <strong>Container</strong>, ensure that <strong>Use existing</strong> is selected and that <strong>vibrationcontainer</strong> is selected from the dropdown list.</p></li>
+<li><p>Under <strong>Authentication Mode</strong>, select <strong>Connection string</strong></p>
+
+<blockquote>
+<p><strong>Note</strong> that the <strong>Storage account key</strong> is displayed.</p>
+</blockquote></li>
+<li><p>Leave the <strong>Path pattern</strong> blank.</p></li>
+<li><p>Leave the <strong>Date format</strong> and <strong>Time format</strong> at their defaults.</p></li>
+<li><p>Under <strong>Event serialization format</strong>, ensure that <strong>JSON</strong> is selected.</p></li>
+<li><p>Under <strong>Format</strong>, ensure that <strong>Line separated</strong> is selected.</p></li>
+<li><p>Under <strong>Encoding</strong>, ensure that <strong>UTF-8</strong> is selected.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  This setting stores each record as a JSON object on each line and, taken as a whole, results in a file that is an invalid JSON record. The other option, <strong>Array</strong>, ensures that the entire document is formatted as a JSON array where each record is an item in the array. This allows the entire file to be parsed as valid JSON.</p>
+</blockquote></li>
+<li><p>Leave <strong>Minimum rows</strong> blank.</p></li>
+<li><p>Under <strong>Maximum time</strong>, leave <strong>Hours</strong> and <strong>Minutes</strong> blank.</p></li>
+<li><p>To create the output, click <strong>Save</strong>, and then wait for the output to be created.</p>
+
+<p>The <strong>Outputs</strong> list will be updated with the new output.</p></li>
+</ol>
+
+<h4 id="toc_19">Task 4: Create the Stream Analytics Job Query</h4>
+
+<ol>
+<li><p>To edit the query, on the left-side menu under <strong>Job topology</strong>, click <strong>Query</strong>.</p></li>
+<li><p>In the query editor pane, replace the existing query with the query below:</p>
+
+<div><pre><code class="language-sql">SELECT
+    *
+INTO
+    vibrationOutput
+FROM
+    vibrationInput</code></pre></div></li>
+<li><p>Directly above the query editor pane, click <strong>Save Query</strong>.</p></li>
+<li><p>On the left-side menu, click <strong>Overview</strong>.</p></li>
+</ol>
+
+<h4 id="toc_20">Task 5: Test the Logging Route</h4>
+
+<p>Now for the fun part. Does the telemetry your device app is pumping out work its way along the route, and into the storage container?</p>
+
+<ol>
+<li><p>Ensure that the device app you created in Visual Studio Code is still running.</p>
+
+<p>If not, run it in the Visual Studio Code terminal using <code>dotnet run</code>.</p></li>
+<li><p>On the <strong>Overview</strong> pane of your Stream Analytics job, click <strong>Start</strong>.</p></li>
+<li><p>In the <strong>Start job</strong> pane, leave the <strong>Job output start time</strong> set to <strong>Now</strong>, and then click <strong>Start</strong>.</p>
+
+<p>It can take a few moments for the job to start.</p></li>
+<li><p>On the Azure portal menu, click <strong>Dashboard</strong>.</p></li>
+<li><p>On your Resources tile, click <strong>vibrationstore{your-id}</strong>.</p>
+
+<p>If your Storage account is not visible, use the <strong>Refresh</strong> button at the top of the resource group tile.</p></li>
+<li><p>On the <strong>Overview</strong> pane of your Storage account, select the <strong>Monitoring</strong> section.</p></li>
+<li><p>Under <strong>Key metrics</strong>, adjacent to <strong>Show data for last</strong>, change the time range to <strong>1 hour</strong>.</p>
+
+<p>You should see activity in the charts.</p></li>
+<li><p>On the left-side menu, click <strong>Storage Browser (preview)</strong>.</p>
+
+<p>You can use Storage Explorer for additional reassurance that all of your data is getting to the storage account.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  The Storage Explorer is currently in preview mode, so its exact mode of operation may change.</p>
+</blockquote></li>
+<li><p>In <strong>Storage Browser (preview)</strong>, under <strong>BLOB CONTAINERS</strong>, click <strong>vibrationcontainer</strong>.</p></li>
+<li><p>To view the data, select the json file and click <strong>Download</strong>, then click <strong>Click here to download</strong>.</p></li>
+<li><p>Open the downloaded file with <strong>Visual Studio Code</strong>, and review the JSON data.</p>
+
+<div><pre><code class="language-javascript">{&quot;vibration&quot;:-0.025974767991863323,&quot;EventProcessedUtcTime&quot;:&quot;2021-10-22T22:03:10.8624609Z&quot;,&quot;PartitionId&quot;:3,&quot;EventEnqueuedUtcTime&quot;:&quot;2021-10-22T22:02:09.1180000Z&quot;,&quot;IoTHub&quot;:{&quot;MessageId&quot;:null,&quot;CorrelationId&quot;:null,&quot;ConnectionDeviceId&quot;:&quot;sensor-v-3000&quot;,&quot;ConnectionDeviceGenerationId&quot;:&quot;637705296662649188&quot;,&quot;EnqueuedTime&quot;:&quot;2021-10-22T22:02:08.7900000Z&quot;}}
+{&quot;vibration&quot;:-2.6574811793183173,&quot;EventProcessedUtcTime&quot;:&quot;2021-10-22T22:03:10.9718423Z&quot;,&quot;PartitionId&quot;:3,&quot;EventEnqueuedUtcTime&quot;:&quot;2021-10-22T22:02:11.1030000Z&quot;,&quot;IoTHub&quot;:{&quot;MessageId&quot;:null,&quot;CorrelationId&quot;:null,&quot;ConnectionDeviceId&quot;:&quot;sensor-v-3000&quot;,&quot;ConnectionDeviceGenerationId&quot;:&quot;637705296662649188&quot;,&quot;EnqueuedTime&quot;:&quot;2021-10-22T22:02:11.0720000Z&quot;}}
+{&quot;vibration&quot;:3.9654399589335796,&quot;EventProcessedUtcTime&quot;:&quot;2021-10-22T22:03:10.9718423Z&quot;,&quot;PartitionId&quot;:3,&quot;EventEnqueuedUtcTime&quot;:&quot;2021-10-22T22:02:13.3060000Z&quot;,&quot;IoTHub&quot;:{&quot;MessageId&quot;:null,&quot;CorrelationId&quot;:null,&quot;ConnectionDeviceId&quot;:&quot;sensor-v-3000&quot;,&quot;ConnectionDeviceGenerationId&quot;:&quot;637705296662649188&quot;,&quot;EnqueuedTime&quot;:&quot;2021-10-22T22:02:13.1500000Z&quot;}}
+{&quot;vibration&quot;:0.99447803871677132,&quot;EventProcessedUtcTime&quot;:&quot;2021-10-22T22:03:10.9718423Z&quot;,&quot;PartitionId&quot;:3,&quot;EventEnqueuedUtcTime&quot;:&quot;2021-10-22T22:02:15.2910000Z&quot;,&quot;IoTHub&quot;:{&quot;MessageId&quot;:null,&quot;CorrelationId&quot;:null,&quot;ConnectionDeviceId&quot;:&quot;sensor-v-3000&quot;,&quot;ConnectionDeviceGenerationId&quot;:&quot;637705296662649188&quot;,&quot;EnqueuedTime&quot;:&quot;2021-10-22T22:02:15.2120000Z&quot;}}</code></pre></div></li>
+<li><p>Close the <strong>Visual Studio Code</strong> document containing your data.</p></li>
+<li><p>Return to your Azure portal Dashboard.</p></li>
+<li><p>Navigate back to your Dashboard.</p></li>
+<li><p>On your Resources tile, click <strong>vibrationJob</strong>.</p></li>
+<li><p>On the <strong>vibrationJob</strong> blade, click <strong>Stop</strong>, and then click <strong>Yes</strong>.</p>
+
+<p>You&#39;ve traced the activity from the device app, to the hub, down the route, and to the storage container. Great progress! You will continue this scenario stream analytics in the next module when you take a quick look at data visualization.</p></li>
+<li><p>Switch to the Visual Studio Code window.</p></li>
+<li><p>At the Terminal command prompt, to exit the device simulator app, press <strong>CTRL-C</strong>.</p></li>
+</ol>
+
+<blockquote>
+<p><strong>IMPORTANT</strong>: Do not remove these resources until you have completed the Data Visualization module of this course.</p>
+</blockquote>
+
+
+
+
+</body>
+
+</html>

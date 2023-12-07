@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>LAB_AK_06-automatic-enrollment-of-devices-in-dps</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<blockquote>
+<div><pre><code class="language-none">title: &#39;Lab 06: Automatically provision IoT devices securely and at scale with DPS&#39;
+module: &#39;Module 3: Device Provisioning at Scale&#39;</code></pre></div>
+</blockquote>
+
+<h1 id="toc_0">Automatically provision IoT devices securely and at scale with DPS</h1>
+
+<h2 id="toc_1">Lab Scenario</h2>
+
+<p>Your work to-date on Contoso&#39;s Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and deprovisioning process using an Individual Enrollment approach. The management team has now asked that you begin testing the process for a larger scale rollout.</p>
+
+<p>To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication. You will be setting up a group enrollment to verify that Contoso&#39;s requirements are met.</p>
+
+<p>The following resources will be created:</p>
+
+<p><img src="media/LAB_AK_06-architecture.png" alt="Lab 6 Architecture"></p>
+
+<h2 id="toc_2">In This Lab</h2>
+
+<p>In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then generate an X.509 root CA Certificate using OpenSSL within the Azure Cloud Shell, and use the root certificate to configure the Group Enrollment within the Device Provisioning Service (DPS). After that, you will use the root certificate to generate a device certificate, which you will use within a simulated device code to provision your device to IoT hub. While in your device code, you will implement access to the device twin properties used to perform initial configuration of the device. You will then test your simulated device. To finish up this lab, you will deprovision the entire group enrollment. The lab includes the following exercises:</p>
+
+<ul>
+<li>Configure Lab Prerequisites (required Azure resources)</li>
+<li>Generate and Configure X.509 CA Certificates using OpenSSL</li>
+<li>Configure simulated device with X.509 certificate</li>
+<li>Test the Simulated Device</li>
+<li>Deprovision a Group Enrollment</li>
+</ul>
+
+<h2 id="toc_3">Lab Instructions</h2>
+
+<h3 id="toc_4">Exercise 1: Configure Lab Prerequisites</h3>
+
+<p>This lab assumes that the following Azure resources are available:</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Resource Type</th>
+<th style="text-align: left">Resource Name</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td style="text-align: left">Resource Group</td>
+<td style="text-align: left">rg-az220</td>
+</tr>
+<tr>
+<td style="text-align: left">IoT Hub</td>
+<td style="text-align: left">iot-az220-training-{your-id}</td>
+</tr>
+<tr>
+<td style="text-align: left">Device Provisioning Service</td>
+<td style="text-align: left">dps-az220-training-{your-id}</td>
+</tr>
+</tbody>
+</table>
+
+<p>To ensure these resources are available, complete the following steps.</p>
+
+<ol>
+<li><p>In the virtual machine environment, open a Microsoft Edge browser window, and then navigate to the following Web address:</p>
+
+<p>+++https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fmaster%2FAllfiles%2FARM%2Flab06.json+++</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Whenever you see the green &quot;T&quot; symbol, for example +++enter this text+++, you can click the associated text and the information will be typed into the current field within the virtual machine environment.</p>
+</blockquote></li>
+<li><p>If prompted to log in to the Azure portal, enter the Azure credentials that you are using for this course.</p>
+
+<p>The <strong>Custom deployment</strong> page will be displayed.</p></li>
+<li><p>Under <strong>Project details</strong>, in the <strong>Subscription</strong> dropdown, ensure that the Azure subscription that you intend to use for this course is selected.</p></li>
+<li><p>In the <strong>Resource group</strong> dropdown, select <strong>rg-az220</strong>.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: If <strong>rg-az220</strong> is not listed:</p>
+
+<ol>
+<li>Under the <strong>Resource group</strong> dropdown, click <strong>Create new</strong>.</li>
+<li>Under <strong>Name</strong>, enter <strong>rg-az220</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+</blockquote></li>
+<li><p>Under <strong>Instance details</strong>, in the <strong>Region</strong> dropdown, select the region closest to you.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: If the <strong>rg-az220</strong> group already exists, the <strong>Region</strong> field is set to the region used by the resource group and is read-only.</p>
+</blockquote></li>
+<li><p>In the <strong>Your ID</strong> field, enter the unique ID you created in Exercise 1.</p></li>
+<li><p>In the <strong>Course ID</strong> field, enter <strong>az220</strong>.</p></li>
+<li><p>To validate the template, click <strong>Review and create</strong>.</p></li>
+<li><p>If validation passes, click <strong>Create</strong>.</p>
+
+<p>The deployment will start.</p></li>
+<li><p>Once the deployment has completed, in the left navigation area, to review any output values from the template,  click <strong>Outputs</strong>.</p>
+
+<p>Make a note of the outputs for use later:</p>
+
+<ul>
+<li>connectionString</li>
+<li>dpsScopeId</li>
+</ul></li>
+</ol>
+
+<p>The resources have now been created.</p>
+
+<h3 id="toc_5">Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL</h3>
+
+<p>In this exercise, you will generate an X.509 CA Certificate using OpenSSL within the Azure Cloud Shell. This certificate will be used to configure the Group Enrollment within the Device Provisioning Service (DPS).</p>
+
+<h4 id="toc_6">Task 1: Generate the certificates</h4>
+
+<ol>
+<li><p>If necessary, log in to the <a href="https://portal.azure.com">Azure portal</a> using the Azure account credentials that you are using for this course.</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>In the top right of the portal window, to open the Azure Cloud Shell, click <strong>Cloud Shell</strong>.</p>
+
+<p>The Cloud Shell button has an icon that appears to represent a command prompt - <strong><code>&gt;_</code></strong>.</p>
+
+<p>A Cloud Shell window will open near the bottom of the display screen.</p></li>
+<li><p>In the upper left corner of the Cloud Shell window, ensure that <strong>Bash</strong> is selected as the environment option.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  Both <em>Bash</em> and <em>PowerShell</em> interfaces for the Azure Cloud Shell support the use of <strong>OpenSSL</strong>. In this Exercise you will be using some helper scripts written for the <em>Bash</em> shell.</p>
+</blockquote></li>
+<li><p>At the Cloud Shell command prompt, to create and then move into a new directory, enter the following commands:</p>
+
+<div><pre><code class="language-bash"># ensure the current directory is the user&#39;s home directory
+cd ~
+
+# make a directory named &quot;certificates&quot;
+mkdir certificates
+
+# change directory to the &quot;certificates&quot; directory
+cd certificates</code></pre></div></li>
+<li><p>At the Cloud Shell command prompt, to download and prepare the Azure IoT helper scripts that you will be using, enter the following commands:</p>
+
+<div><pre><code class="language-bash"># download helper script files
+curl https://raw.githubusercontent.com/Azure/azure-iot-sdk-c/master/tools/CACertificates/certGen.sh --output certGen.sh
+curl https://raw.githubusercontent.com/Azure/azure-iot-sdk-c/master/tools/CACertificates/openssl_device_intermediate_ca.cnf --output openssl_device_intermediate_ca.cnf
+curl https://raw.githubusercontent.com/Azure/azure-iot-sdk-c/master/tools/CACertificates/openssl_root_ca.cnf --output openssl_root_ca.cnf
+
+# update script permissions so user can read, write, and execute it
+chmod 700 certGen.sh</code></pre></div>
+
+<p>The helper script and supporting files are being downloaded from the <strong>Azure/azure-iot-sdk-c</strong> open source project hosted on Github, which is a component of the Azure IoT Device SDK. The <strong>certGen.sh</strong> helper script will provide you with a chance to see how CA Certificates are used without diving too deeply into the specifics of OpenSSL configuration (which is outside the scope of this course).</p>
+
+<p>For additional instructions on using this helper script, and for instructions on how to use PowerShell instead of Bash, please see this link: <a href="https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md">https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md</a></p>
+
+<blockquote>
+<p><strong>WARNING</strong>: Certificates created by this helper script <strong>MUST NOT</strong> be used for Production. They contain hard-coded passwords (&quot;<em>1234</em>&quot;), expire after 30 days, and most importantly are provided for demonstration purposes only to help you quickly understand CA Certificates. When building products against CA Certificates, be sure to apply your company&#39;s security best practices for certificate creation and lifetime management.</p>
+</blockquote>
+
+<p>If you are interested, you can quickly scan the contents of the script file that you downloaded by using the editor that&#39;s built-in to the Cloud Shell.</p>
+
+<ul>
+<li>In the Cloud Shell, to open the editor, click <strong><code>{}</code></strong>.</li>
+<li>In the FILES list, click <strong>certificates</strong>, and then click <strong>certGen.sh</strong></li>
+</ul>
+
+<blockquote>
+<p><strong>Note</strong>: If you are experienced with other text file viewing tools in the Bash environment, such as the <code>more</code> or <code>vi</code> commands, you could also use those tools.</p>
+</blockquote>
+
+<p>Next, you will use the script to create your root and intermediate certificates.</p></li>
+<li><p>To generate the root and intermediate certificates, enter the following command:</p>
+
+<div><pre><code class="language-bash">./certGen.sh create_root_and_intermediate</code></pre></div>
+
+<p>Notice that you ran the script with the <code>create_root_and_intermediate</code> option. This command assumes that you are running the script from within the <code>~/certificates</code> directory.</p>
+
+<p>This command generated a Root CA Certificate named <code>azure-iot-test-only.root.ca.cert.pem</code> and placed it within a <code>./certs</code> directory (under the certificates directory that you created).</p></li>
+<li><p>To download the root certificate to your local machine (so it can be uploaded to DPS), enter the following command:</p>
+
+<div><pre><code class="language-bash">download ~/certificates/certs/azure-iot-test-only.root.ca.cert.pem</code></pre></div>
+
+<p>You will be prompted to save the file to your local machine. Make a note of where the file is being saved, you will need it in the next task.</p></li>
+</ol>
+
+<h4 id="toc_7">Task 2: Configure DPS to trust the root certificate</h4>
+
+<ol>
+<li><p>In the Azure portal, open your Device Provisioning Service.</p>
+
+<p>The Device Provisioning Service is accessible from the Resources tile on your dashboard by clicking <code>dps-az220-training-{your-id}</code>.</p></li>
+<li><p>On the left-side menu of the <strong>dps-az220-training-{your-id}</strong> blade, under <strong>Settings</strong>, click <strong>Certificates</strong>.</p></li>
+<li><p>On the <strong>Certificates</strong> pane, at the top of the pane, click <strong>+ Add</strong>.</p>
+
+<p>Clicking <strong>+ Add</strong> will start the process of uploading the X.509 CA Certificate to the DPS service.</p></li>
+<li><p>On the <strong>Add Certificate</strong> blade, under <strong>Certificate Name</strong>, enter <strong>root-ca-cert</strong></p>
+
+<p>It is important to provide a name that enables you to differentiate between certificates, such as your root certificate and intermediate certificate, or multiple certificates at the same hierarchy level within the chain.</p>
+
+<blockquote>
+<p><strong>Note</strong>: The root certificate name that you entered could be the same as the name of the certificate file, or something different. The name that you provided is a logical name that has no correlation to the <em>Common Name</em> that is embedded within the contents X.509 CA Certificate.</p>
+</blockquote></li>
+<li><p>Under <strong>Certificate .pem or .cer file.</strong>, to the right of the text box, click <strong>Open</strong>.</p>
+
+<p>Clicking the <strong>Open</strong> button to the right of the text field will open an Open file dialog that enables you to navigate to the <code>azure-iot-test-only.root.ca.cert.pem</code> CA Certificate that you downloaded earlier.</p></li>
+<li><p>Navigate to the folder location where you downloaded the root CA Certificate file, click <strong>azure-iot-test-only.root.ca.cert.pem</strong>, and then click <strong>Open</strong>.</p></li>
+<li><p>At the bottom of the <strong>Add Certificate</strong> blade, click <strong>Save</strong>.</p>
+
+<p>Once the X.509 CA Certificate has been uploaded, the Certificates pane will display the certificate with the <strong>Status</strong> value set to <strong>Unverified</strong>. Before this CA Certificate can be used to authenticate devices to DPS, you will need to verify <em>Proof of Possession</em> of the certificate.</p></li>
+<li><p>To start the process of verifying Proof of Possession of the certificate, click <strong>root-ca-cert</strong>.</p></li>
+<li><p>At the bottom of the <strong>Certificate Details</strong> pane, click <strong>Generate Verification Code</strong>.</p>
+
+<p>You may need to scroll down to see the <strong>Generate Verification Code</strong> button.</p>
+
+<p>When you click the button it will place the generated code ino the Verification Code field (located just above the button).</p></li>
+<li><p>To the right of <strong>Verification Code</strong>, click <strong>Copy to clipboard</strong>.</p>
+
+<p>Proof of Possession of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verification code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.</p>
+
+<blockquote>
+<p><strong>IMPORTANT</strong>: You will need to leave the <strong>Certificate Details</strong> pane open while you generate the verification certificate. If you close the pane, you will invalidate the verification code, and will need to generate a new one.</p>
+</blockquote></li>
+<li><p>Open the <strong>Azure Cloud Shell</strong>, if it&#39;s not still open from earlier, and navigate to the <code>~/certificates</code> directory.</p>
+
+<p>You can use the <code>cd</code> command to change directories.</p></li>
+<li><p>To create the verification certificate, enter the following command:</p>
+
+<div><pre><code class="language-bash">./certGen.sh create_verification_certificate &lt;verification-code&gt;</code></pre></div>
+
+<p>Be sure to replace the <code>&lt;verification-code&gt;</code> placeholder with the <strong>Verification Code</strong> generated by the Azure portal.</p>
+
+<p>For example, the command that you run will look similar to the following:</p>
+
+<div><pre><code class="language-bash">./certGen.sh create_verification_certificate 49C900C30C78D916C46AE9D9C124E9CFFD5FCE124696FAEA</code></pre></div>
+
+<p>This generates a <em>verification certificate</em> that is chained to the CA certificate. The subject of the certificate is the verification code. The generated Verification Certificate named <code>verification-code.cert.pem</code> is located within the <code>./certs</code> directory of the Azure Cloud Shell.</p>
+
+<p>The next step is to download the verification certificate to your local machine (similar to what you did with the root certificate earlier), so that you can then upload it to DPS.</p></li>
+<li><p>To download the verification certificate to your local machine, enter the following command:</p>
+
+<div><pre><code class="language-bash">download ~/certificates/certs/verification-code.cert.pem</code></pre></div>
+
+<blockquote>
+<p><strong>Note</strong>: Depending on the web browser, you may be prompted to allow multiple downloads at this point. If there appears to be no response to your download command, make sure there&#39;s not a prompt elsewhere on the screen asking for permission to allow the download.</p>
+</blockquote></li>
+<li><p>Switch back to the <strong>Certificate Details</strong> pane.</p>
+
+<p>This pane of your DPS service should still be open in the Azure portal.</p></li>
+<li><p>At the bottom the <strong>Certificate Details</strong> pane, below and to the right of <strong>Verification Certificate .pem or .cer file.</strong>, click <strong>Open</strong>.</p></li>
+<li><p>In the Open file dialog, navigate to your downloads folder, click <strong>verification-code.cert.pem</strong>, and then click <strong>Open</strong>.</p></li>
+<li><p>At the bottom the <strong>Certificate Details</strong> pane, click <strong>Verify</strong>.</p></li>
+<li><p>On the <strong>Certificates</strong> pane, ensure that the <strong>Status</strong> for the certificate is now set to <strong>Verified</strong>.</p>
+
+<p>You may need to click <strong>Refresh</strong> at the top of the pane (to the right of the <strong>Add</strong> button) to see this change.</p></li>
+</ol>
+
+<h4 id="toc_8">Task 3: Create Group Enrollment (X.509 Certificate) in DPS</h4>
+
+<p>In this task, you will create a new enrollment group within the Device Provisioning Service (DPS) that uses X.509 certificate attestation.</p>
+
+<ol>
+<li><p>On the left-side menu of the <strong>dps-az220-training-{your-id}</strong> blade, under <strong>Settings</strong>, click <strong>Manage enrollments</strong>.</p></li>
+<li><p>At the top of the <strong>Manage enrollments</strong> pane, click <strong>Add enrollment group</strong>.</p>
+
+<p>Recall that an enrollment group is basically a record of the devices that may register through auto-provisioning.</p></li>
+<li><p>On the <strong>Add Enrollment Group</strong> blade, under <strong>Group name</strong>, enter <strong>eg-test-simulated-devices</strong></p></li>
+<li><p>Ensure that the <strong>Attestation Type</strong> is set to <strong>Certificate</strong>.</p></li>
+<li><p>Ensure that the <strong>Certificate Type</strong> field is set to <strong>CA Certificate</strong>.</p></li>
+<li><p>In the <strong>Primary Certificate</strong> dropdown, select the CA certificate that was uploaded to DPS previously, likely <strong>root-ca-cert</strong>.</p></li>
+<li><p>Leave the <strong>Secondary Certificate</strong> dropdown set to <strong>No certificate selected</strong>.</p>
+
+<p>The secondary certificate is generally used for certificate rotation, to accommodate expiring certificates or certificates that have been compromised. You can find more information on rolling certificates here: <a href="https://docs.microsoft.com/en-us/azure/iot-dps/how-to-roll-certificates">https://docs.microsoft.com/en-us/azure/iot-dps/how-to-roll-certificates</a></p></li>
+<li><p>Leave the <strong>Select how you want to assign devices to hubs</strong> field set to <strong>Evenly weighted distribution</strong>.</p>
+
+<p>In large environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. You will have a single IoT Hub associated with the enrollment in this lab, so how you assign devices to IoT hubs doesn&#39;t really apply within this lab scenario.</p></li>
+<li><p>Notice that the <strong>Select the IoT hubs this group can be assigned to</strong> dropdown has your <strong>iot-az220-training-{your-id}</strong> IoT Hub selected.</p>
+
+<p>This field is used to ensure that when the device is provisioned, it gets added to the correct IoT Hub.</p></li>
+<li><p>Leave the <strong>Select how you want device data to be handled on re-provisioning</strong> field set to <strong>Re-provision and migrate data</strong>.</p>
+
+<p>This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.</p></li>
+<li><p>In the <strong>Initial Device Twin State</strong> field, modify the JSON object as follows:</p>
+
+<div><pre><code class="language-javascript">{
+    &quot;tags&quot;: {},
+    &quot;properties&quot;: {
+        &quot;desired&quot;: {
+            &quot;telemetryDelay&quot;: &quot;1&quot;
+        }
+    }
+}</code></pre></div>
+
+<p>This JSON data represents the initial configuration of device twin desired properties for any device that participates in this enrollment group.</p>
+
+<p>The devices will use the <code>properties.desired.telemetryDelay</code> property to set the time delay for reading and sending telemetry to IoT Hub.</p></li>
+<li><p>Leave <strong>Enable entry</strong> set to <strong>Enable</strong>.</p>
+
+<p>Generally, you&#39;ll want to enable new enrollment entries and keep them enabled.</p></li>
+<li><p>At the top of the <strong>Add Enrollment Group</strong> blade, click <strong>Save</strong>.</p></li>
+</ol>
+
+<h3 id="toc_9">Exercise 3: Configure simulated device with X.509 certificate</h3>
+
+<p>In this exercise, you will generate a device certificate using the root certificate, and configure a simulated device that connects by using the device certificate for attestation.</p>
+
+<h4 id="toc_10">Task 1: Generate a device certificate</h4>
+
+<ol>
+<li><p>If necessary, log in to your Azure portal using your Azure account credentials.</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>On the Azure portal toolbar, click <strong>Cloud Shell</strong></p>
+
+<p>The Azure portal toolbar runs across the top of the portal window. The Cloud Shell button is the 6th in from the right.</p></li>
+<li><p>Verify that the Cloud Shell is using <strong>Bash</strong>.</p>
+
+<p>The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is <strong>Bash</strong>.</p></li>
+<li><p>At the Cloud Shell command prompt, to navigate to the <code>~/certificates</code> directory, enter the following command:</p>
+
+<div><pre><code class="language-bash">cd ~/certificates</code></pre></div>
+
+<p>The <code>~/certificates</code> directory is where the <code>certGen.sh</code> helper scripts were downloaded. You used them to generate the CA Certificate for DPS earlier in this lab. This helper script will also be used to generate a device certificate within the CA Certificate chain.</p></li>
+<li><p>To generate an X.509 device certificate within the CA certificate chain, enter the following command:</p>
+
+<div><pre><code class="language-bash">./certGen.sh create_device_certificate sensor-thl-2000</code></pre></div>
+
+<p>This command will create a new X.509 certificate that&#39;s signed by the CA certificate that was generated previously. Notice that the device id (<code>sensor-thl-2000</code>) is passed to the <code>create_device_certificate</code> command of the <code>certGen.sh</code> script. This device id will be set within the <em>common name</em>, or <code>CN=</code>, value of the device certificate. This certificate will generate a leaf device X.509 certificate for your simulated device, and will be used to authenticate the device with the Device Provisioning Service (DPS).</p>
+
+<p>Once the <code>create_device_certificate</code> command has completed, the generated X.509 device certificate will be named <code>new-device.cert.pfx</code>, and will be located within the <code>/certs</code> sub-directory.</p>
+
+<blockquote>
+<p><strong>Note</strong>: This command overwrites any existing device certificate in the <code>/certs</code> sub-directory. If you want to create a certificate for multiple devices, ensure that you save a copy of the <code>new-device.cert.pfx</code> each time you run the command.</p>
+</blockquote></li>
+<li><p>To rename the device certificate that you just created, enter the following commands:</p>
+
+<div><pre><code class="language-bash">mv ~/certificates/certs/new-device.cert.pfx ~/certificates/certs/sensor-thl-2000-device.cert.pfx
+mv ~/certificates/certs/new-device.cert.pem ~/certificates/certs/sensor-thl-2000-device.cert.pem</code></pre></div></li>
+<li><p>To create an additional device certificate, enter the following commands:</p>
+
+<div><pre><code class="language-bash">./certGen.sh create_device_certificate sensor-thl-2001
+mv ~/certificates/certs/new-device.cert.pfx ~/certificates/certs/sensor-thl-2001-device.cert.pfx
+mv ~/certificates/certs/new-device.cert.pem ~/certificates/certs/sensor-thl-2001-device.cert.pem</code></pre></div></li>
+<li><p>To download the generated X.509 device certificates from the Cloud Shell to your local machine, enter the following commands:</p>
+
+<div><pre><code class="language-bash">download ~/certificates/certs/sensor-thl-2000-device.cert.pfx
+download ~/certificates/certs/sensor-thl-2001-device.cert.pfx</code></pre></div>
+
+<p>In the next task, you will start building the simulated devices that will use the X.509 device certificates to authenticate with the Device Provisioning Service.</p></li>
+</ol>
+
+<h4 id="toc_11">Task 2: Configure a simulated device</h4>
+
+<p>In this task, you will complete the following:</p>
+
+<ul>
+<li>Get the ID Scope from DPS that will be placed in code</li>
+<li>Copy the downloaded device certificate into the root folder of the application</li>
+<li><p>Configure the application in Visual Studio Code</p></li>
+</ul>
+
+<ol>
+<li><p>In the Azure portal, open your Device Provisioning Service blade and ensure that the <strong>Overview</strong> pane is selected.</p></li>
+<li><p>On the <strong>Overview</strong> pane, copy the <strong>ID Scope</strong> for the Device Provisioning Service, and save it for later reference.</p>
+
+<p>There is a copy button to the right of the value that will appear when you hover over the value.</p>
+
+<p>The <strong>ID Scope</strong> will be similar to this value: <code>0ne0004E52G</code></p></li>
+<li><p>Open Windows File Explorer, and then navigate to the folder where the <code>sensor-thl-2000-device.cert.pfx</code> certificate file was downloaded.</p></li>
+<li><p>Use File Explorer to create a copy of the 2 device certificate files.</p>
+
+<p>It will save some time to copy both certificate files now, but you will only be using the first one, <code>sensor-thl-2000-device.cert.pfx</code>, in the code project that you build initially.</p></li>
+<li><p>In File Explorer, navigate to the Final folder for lab 6 (Automatic Enrollment of Devices in DPS).</p>
+
+<p>In <em>Lab 3: Setup the Development Environment</em>, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:</p>
+
+<ul>
+<li>Allfiles
+
+<ul>
+<li>Labs
+
+<ul>
+<li>06-Automatic Enrollment of Devices in DPS</li>
+<li>Final
+
+<ul>
+<li>ContainerDevice</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>With the ContainerDevice folder open, paste-in the copied device certificate files.</p>
+
+<p>The root directory of the ContainerDevice folder includes the <code>Program.cs</code> file for your simulated device app. The simulated device app will use the device certificate file when authenticating to the Device Provisioning Service.</p></li>
+<li><p>Open <strong>Visual Studio Code</strong>.</p></li>
+<li><p>On the <strong>File</strong> menu, click <strong>Open Folder</strong></p></li>
+<li><p>In the <strong>Open Folder</strong> dialog, navigate to the Final folder for lab 6 (Automatic Enrollment of Devices in DPS).</p></li>
+<li><p>Click <strong>ContainerDevice</strong>, and then click <strong>Select Folder</strong>.</p>
+
+<p>You should see the following files listed in the EXPLORER pane of Visual Studio Code:</p>
+
+<ul>
+<li>ContainerDevice.csproj</li>
+<li>Program.cs</li>
+<li>sensor-thl-2000-device.cert.pfx</li>
+</ul>
+
+<p><strong>Note</strong>: The other device certificate files that you copied to this folder will be used later in this lab, but for now you will focus on implementing just the first device certificate file.</p></li>
+<li><p>In the <strong>EXPLORER</strong> pane, to open the ContainerDevice.csproj file, click <strong>ContainerDevice.csproj</strong>.</p></li>
+<li><p>In the code editor pane, within the <code>&lt;ItemGroup&gt;</code> tag, update the certificate file name as follows:</p>
+
+<div><pre><code class="language-markup">&lt;ItemGroup&gt;
+    &lt;None Update=&quot;sensor-thl-2000-device.cert.pfx&quot; CopyToOutputDirectory=&quot;PreserveNewest&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Client&quot; Version=&quot;1.*&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Provisioning.Transport.Mqtt&quot; Version=&quot;1.*&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Provisioning.Transport.Amqp&quot; Version=&quot;1.*&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Provisioning.Transport.Http&quot; Version=&quot;1.*&quot; /&gt;
+&lt;/ItemGroup&gt;</code></pre></div>
+
+<p>This configuration ensures that the <code>sensor-thl-2000-device.cert.pfx</code> certificate file is copied to the build folder when the C# code is compiled, and made available for the program to access when it executes.</p></li>
+<li><p>On the Visual Studio Code <strong>File</strong> menu, click <strong>Save</strong>.</p>
+
+<p><strong>Note</strong>: If you are prompted by Visual Studio Code to Restore, do that now.</p></li>
+<li><p>In the <strong>EXPLORER</strong> pane, click <strong>Program.cs</strong>.</p>
+
+<p>A cursory glance will reveal that this version of the <strong>ContainerDevice</strong> application is virtually identical to the version used in the preceding lab. The only changes will be those that relate specifically to the use of X.509 certificates as an attestation mechanism. From the application perspective, it matters little that this device will be connecting via a Group Enrollment vs an Individual Enrollment.</p></li>
+<li><p>Locate the <strong>GlobalDeviceEndpoint</strong> variable, and notice that its value is set to the Global Device Endpoint for the Azure Device Provisioning Service (<code>global.azure-devices-provisioning.net</code>).</p>
+
+<p>Within the Public Azure Cloud, <strong>global.azure-devices-provisioning.net</strong> is the Global Device Endpoint for the Device Provisioning Service (DPS). All devices connecting to Azure DPS will be configured with this Global Device Endpoint DNS name. You should see code that is similar to the following:</p>
+
+<div><pre><code class="language-csharp">private const string GlobalDeviceEndpoint = &quot;global.azure-devices-provisioning.net&quot;;</code></pre></div></li>
+<li><p>Locate the <strong>dpsIdScope</strong> variable, and update the assigned value using the <strong>ID Scope</strong> that you copied from the Overview pane of the Device Provisioning Service.</p>
+
+<p>When you have updated your code, it should look similar to the following:</p>
+
+<div><pre><code class="language-csharp">private static string dpsIdScope = &quot;0ne000CBD6C&quot;;</code></pre></div></li>
+<li><p>Locate the <strong>certificateFileName</strong> variable, and notice that its value is set to the default name of the device certificate file that you generated (<strong>new-device.cert.pfx</strong>).</p>
+
+<p>Rather than using symmetric keys as in the earlier lab, this time the application is using an X.509 certificate. The <strong>new-device.cert.pfx</strong> file is the X.509 device certificate file that you generated using the <strong>certGen.sh</strong> helper script within the Cloud Shell. This variable tells the device code which file contains the X.509 device certificate that it will use when authenticating with the Device Provisioning Service.</p></li>
+<li><p>Update the value assigned to the <strong>certificateFileName</strong> variable as follows:</p>
+
+<div><pre><code class="language-csharp">private static string certificateFileName = &quot;sensor-thl-2000-device.cert.pfx&quot;;</code></pre></div></li>
+<li><p>Locate the <strong>certificatePassword</strong> variable, and notice that its value is set to the default password defined by the <strong>certGen.sh</strong> script.</p>
+
+<p>The <strong>certificatePassword</strong> variable contains the password for the X.509 device certificate. It&#39;s set to <code>1234</code>, as this is the default password used by the <strong>certGen.sh</strong> helper script when generating the X.509 certificates.</p>
+
+<blockquote>
+<p><strong>Note</strong>: For the purpose of this lab, the password is hard coded. In a <em>production</em> scenario, the password will need to be stored in a more secure manner, such as in an Azure Key Vault. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).</p>
+
+<p>An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports. HMS will be discussed in more detail later in this course.</p>
+</blockquote></li>
+<li><p>On the Visual Studio Code <strong>File</strong> menu, click <strong>Save</strong>.</p>
+
+<p>Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.</p></li>
+<li><p>On the <strong>Terminal</strong> menu, click <strong>New Terminal</strong>.</p></li>
+<li><p>At the Terminal command prompt, to verify that you code will build correctly, enter <strong>dotnet build</strong></p>
+
+<p>If you see build error listed, fix them now before continuing to the next exercise. Work with your instructor if needed.</p></li>
+</ol>
+
+<h3 id="toc_12">Exercise 4: Create Additional Instances of your Simulated Device</h3>
+
+<p>In this exercise, you will make copies of your simulated device project, and then update your code to use the different device certificates that you created and added to the project folder.</p>
+
+<h4 id="toc_13">Task 1: Make copies of your code project</h4>
+
+<ol>
+<li><p>Open Windows File Explorer.</p></li>
+<li><p>In File Explorer, navigate to the Final folder for lab 6 (Automatic Enrollment of Devices in DPS).</p>
+
+<p>In <em>Lab 3: Setup the Development Environment</em>, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:</p>
+
+<ul>
+<li>Allfiles
+
+<ul>
+<li>Labs
+
+<ul>
+<li>06-Automatic Enrollment of Devices in DPS</li>
+<li>Final</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Right-click <strong>ContainerDevice</strong>, and then click <strong>Copy</strong>.</p>
+
+<p>The ContainerDevice folder should be the folder containing your simulated device code.</p></li>
+<li><p>Right-click in the empty space below <strong>ContainerDevice</strong>, and then click <strong>Paste</strong></p>
+
+<p>You should see that a folder named &quot;ContainerDevice - Copy&quot; has been created.</p></li>
+<li><p>Right-click <strong>ContainerDevice - Copy</strong>, click <strong>Rename</strong>, and then type <strong>ContainerDevice2001</strong></p></li>
+</ol>
+
+<h4 id="toc_14">Task 2: Update the certificate file references in your code project</h4>
+
+<ol>
+<li><p>If necessary, open Visual Studio Code.</p></li>
+<li><p>On the <strong>File</strong> menu, click <strong>Open Folder</strong>.</p></li>
+<li><p>Navigate to the lab 6 Final folder.</p></li>
+<li><p>Click <strong>ContainerDevice2001</strong>, and then click <strong>Select Folder</strong>.</p></li>
+<li><p>In the EXPLORER pane, click <strong>Program.cs</strong>.</p></li>
+<li><p>In the code editor, locate the <strong>certificateFileName</strong> variable, and then update the value assigned to the <strong>certificateFileName</strong> variable as follows:</p>
+
+<div><pre><code class="language-csharp">private static string certificateFileName = &quot;sensor-thl-2001-device.cert.pfx&quot;;</code></pre></div></li>
+<li><p>In the <strong>EXPLORER</strong> pane, to open the ContainerDevice.csproj file, click <strong>ContainerDevice.csproj</strong>.</p></li>
+<li><p>In the code editor pane, within the <code>&lt;ItemGroup&gt;</code> tag, update the certificate file name as follows:</p>
+
+<div><pre><code class="language-markup">&lt;ItemGroup&gt;
+    &lt;None Update=&quot;sensor-thl-2001-device.cert.pfx&quot; CopyToOutputDirectory=&quot;PreserveNewest&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Client&quot; Version=&quot;1.*&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Provisioning.Transport.Mqtt&quot; Version=&quot;1.*&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Provisioning.Transport.Amqp&quot; Version=&quot;1.*&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.Azure.Devices.Provisioning.Transport.Http&quot; Version=&quot;1.*&quot; /&gt;
+&lt;/ItemGroup&gt;</code></pre></div></li>
+<li><p>On the <strong>File</strong> menu, click <strong>Save All</strong>.</p></li>
+</ol>
+
+<h3 id="toc_15">Exercise 5: Test the Simulated Device</h3>
+
+<p>In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.</p>
+
+<h4 id="toc_16">Task 1: Build and run the simulated device projects</h4>
+
+<ol>
+<li><p>Ensure that you have Visual Studio Code open.</p></li>
+<li><p>On the <strong>File</strong> menu, click <strong>Open Folder</strong>.</p></li>
+<li><p>Navigate to the lab 6 Final folder.</p></li>
+<li><p>Click <strong>ContainerDevice</strong>, and then click <strong>Select Folder</strong>.</p></li>
+<li><p>On the <strong>View</strong> menu, click <strong>Terminal</strong>.</p>
+
+<p>This will open the integrated Terminal at the bottom of the Visual Studio Code window.</p></li>
+<li><p>At the Terminal command prompt, ensure that the current directory path is set to the <code>\ContainerDevice</code> folder.</p>
+
+<p>You should see something similar to the following:</p>
+
+<p><code>Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Final\ContainerDevice&gt;</code></p></li>
+<li><p>To build and run the <strong>ContainerDevice</strong> project, enter the following command:</p>
+
+<div><pre><code class="language-cmd/sh">dotnet run</code></pre></div>
+
+<blockquote>
+<p><strong>Note</strong>:  When you run your simulated device for the first time, the most common error is an <em>Invalid certificate</em> error. If a <code>ProvisioningTransportException</code> exception is displayed, it is most likely due to this error. If you see a message similar to the one shown below, you will need to ensure that the CA Certificate in DPS, and the Device Certificate for the simulated device application are configured correctly before you can continue.</p>
+
+<div><pre><code class="language-text">localmachine:LabFiles User$ dotnet run
+Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
+Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
+RegistrationID = sensor-thl-2000
+ProvisioningClient RegisterAsync . . . Unhandled exception. Microsoft.Azure.Devices.Provisioning.Client.ProvisioningTransportException: {&quot;errorCode&quot;:401002,&quot;trackingId&quot;:&quot;2e298c80-0974-493c-9fd9-6253fb055ade&quot;,&quot;message&quot;:&quot;Invalid certificate.&quot;,&quot;timestampUtc&quot;:&quot;2019-12-13T14:55:40.2764134Z&quot;}
+  at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.ValidateOutcome(Outcome outcome)
+  at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterDeviceAsync(AmqpClientConnection client, String correlationId, DeviceRegistration deviceRegistration)
+  at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterAsync(ProvisioningTransportRegisterMessage message, CancellationToken cancellationToken)
+  at X509CertificateContainerDevice.ProvisioningDeviceLogic.RunAsync() in /Users/User/Documents/AZ-220/LabFiles/Program.cs:line 121
+  at X509CertificateContainerDevice.Program.Main(String[] args) in /Users/User/Documents/AZ-220/LabFiles/Program.cs:line 55
+...</code></pre></div>
+</blockquote></li>
+<li><p>Notice that the simulated device app sends output to the Terminal window.</p>
+
+<p>When the simulated device application is running correctly, the <strong>Terminal</strong> will display the Console output from the app.</p>
+
+<p>Scroll up to the top of the information displayed in the Terminal window.</p>
+
+<p>Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the <strong>iot-az220-training-{your-id}</strong> IoT Hub, and the device twin desired properties are loaded.</p>
+
+<div><pre><code class="language-text">localmachine:LabFiles User$ dotnet run
+Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
+Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
+RegistrationID = sensor-thl-2000
+ProvisioningClient RegisterAsync . . . Device Registration Status: Assigned
+ProvisioningClient AssignedHub: iot-az220-training-CP1119.azure-devices.net; DeviceID: sensor-thl-2000
+Creating X509 DeviceClient authentication.
+simulated device. Ctrl-C to exit.
+DeviceClient OpenAsync.
+Connecting SetDesiredPropertyUpdateCallbackAsync event handler...
+Loading Device Twin Properties...
+Desired Twin Property Changed:
+{&quot;$version&quot;:1}
+Reported Twin Properties:
+{&quot;telemetryDelay&quot;:1}
+Start reading and sending device telemetry...</code></pre></div>
+
+<p>To review the source code for the simulated device, open the <code>Program.cs</code> source code file. Look for several <code>Console.WriteLine</code> statements that are used to output the messages seen to the console.</p></li>
+<li><p>Notice that JSON formatted telemetry messages are being sent to Azure IoT Hub.</p>
+
+<div><pre><code class="language-text">Start reading and sending device telemetry...
+12/9/2019 5:47:00 PM &gt; Sending message: {&quot;temperature&quot;:24.047539159212047,&quot;humidity&quot;:67.00504162675004,&quot;pressure&quot;:1018.8478924248358,&quot;latitude&quot;:40.129349260196875,&quot;longitude&quot;:-98.42877188146265}
+12/9/2019 5:47:01 PM &gt; Sending message: {&quot;temperature&quot;:26.628804161040485,&quot;humidity&quot;:68.09610794675355,&quot;pressure&quot;:1014.6454375411363,&quot;latitude&quot;:40.093269544242695,&quot;longitude&quot;:-98.22227128174003}</code></pre></div>
+
+<p>Once the simulated device has passed through the initial start up, it will begin sending simulated sensor telemetry messages to Azure IoT Hub.</p>
+
+<p>Notice that the delay, as defined by the <code>telemetryDelay</code> Device Twin Property, between each message sent to IoT Hub is currently delaying <strong>1 second</strong> between sending sensor telemetry messages.</p></li>
+<li><p>Leave the simulated device running.</p></li>
+</ol>
+
+<h4 id="toc_17">Task 2: Start the other simulated device</h4>
+
+<ol>
+<li><p>Open a new instance of Visual Studio Code.</p>
+
+<p>You can do this from the Windows 10 Start menu as follows: On the Windows 10 <strong>Start</strong> menu, right-click <strong>Visual Studio Code</strong>, and then click <strong>New Window</strong>.</p></li>
+<li><p>In the new Visual Studio Code window, on the <strong>File</strong> menu, click <strong>Open Folder</strong>.</p></li>
+<li><p>Navigate to the lab 6 Final folder.</p></li>
+<li><p>Click <strong>ContainerDevice2001</strong>, and then click <strong>Select Folder</strong>.</p></li>
+<li><p>On the <strong>View</strong> menu, click <strong>Terminal</strong>.</p>
+
+<p>This will open the integrated Terminal at the bottom of the Visual Studio Code window.</p></li>
+<li><p>At the Terminal command prompt, ensure that the current directory path is set to the <code>\ContainerDevice2001</code> folder.</p>
+
+<p>You should see something similar to the following:</p>
+
+<p><code>Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Final\ContainerDevice2001&gt;</code></p></li>
+<li><p>To build and run the <strong>ContainerDevice</strong> project, enter the following command:</p>
+
+<div><pre><code class="language-cmd/sh">dotnet run</code></pre></div></li>
+</ol>
+
+<h4 id="toc_18">Task 3: Change the device configuration through its twin</h4>
+
+<p>With the simulated devices running, the <code>telemetryDelay</code> configuration can be updated by editing the device twin Desired State within Azure IoT Hub.</p>
+
+<ol>
+<li><p>Open the <strong>Azure portal</strong>, and then navigate to your <strong>Azure IoT Hub</strong> service.</p></li>
+<li><p>On the left-side menu of your IoT hub blade, under <strong>Explorers</strong>, click <strong>IoT devices</strong>.</p></li>
+<li><p>Within the list of IoT devices, click <strong>sensor-thl-2000</strong>.</p>
+
+<blockquote>
+<p><strong>IMPORTANT</strong>: Make sure you select the device from this lab. You may also see a device named <em>sensor-th-0001</em> that was created earlier in the course.</p>
+</blockquote></li>
+<li><p>On the <strong>sensor-thl-2000</strong> device blade, at the top of the blade, click <strong>Device Twin</strong>.</p>
+
+<p>On the <strong>Device twin</strong> blade, there is an editor with the full JSON for the device twin. This enables you to view and/or edit the device twin state directly within the Azure portal.</p></li>
+<li><p>Locate the <code>properties.desired</code> node within the Device Twin JSON.</p></li>
+<li><p>Update the <code>telemetryDelay</code> property to have the value of <code>&quot;2&quot;</code>.</p>
+
+<p>This will update the <code>telemetryDelay</code> of the simulated device to send sensor telemetry every <strong>2 seconds</strong>.</p>
+
+<p>The resulting JSON for this section of the device twin desired properties will look similar to the following:</p>
+
+<div><pre><code class="language-javascript">&quot;properties&quot;: {
+    &quot;desired&quot;: {
+      &quot;telemetryDelay&quot;: &quot;2&quot;,
+      &quot;$metadata&quot;: {
+        &quot;$lastUpdated&quot;: &quot;2019-12-09T22:48:05.9703541Z&quot;,
+        &quot;$lastUpdatedVersion&quot;: 2,
+        &quot;telemetryDelay&quot;: {
+          &quot;$lastUpdated&quot;: &quot;2019-12-09T22:48:05.9703541Z&quot;,
+          &quot;$lastUpdatedVersion&quot;: 2
+        }
+      },
+      &quot;$version&quot;: 2
+    },</code></pre></div>
+
+<p>Leave the <code>$metadata</code> and <code>$version</code> value of the <code>properties.desired</code> node within the JSON. You should only update the <code>telemetryDelay</code> value to set the new device twin desired property value.</p></li>
+<li><p>At the top of the blade, to apply the device twin desired properties for the device, click <strong>Save</strong>.</p>
+
+<p>Once saved, the updated device twin desired properties will automatically be sent to the simulated device.</p></li>
+<li><p>Switch back to the <strong>Visual Studio Code</strong> window that contains the original <strong>ContainerDevice</strong> project.</p></li>
+<li><p>Notice that the application has been notified of the updated device twin <code>telemetryDelay</code> desired property setting.</p>
+
+<p>The application outputs messages to the Console that show that the new device twin desired properties have been loaded, and the changes have been set and reported back to the Azure IoT Hub.</p>
+
+<div><pre><code class="language-text">Desired Twin Property Changed:
+{&quot;telemetryDelay&quot;:2,&quot;$version&quot;:2}
+Reported Twin Properties:
+{&quot;telemetryDelay&quot;:2}</code></pre></div></li>
+<li><p>Notice the simulated device sensor telemetry messages are now being sent to Azure IoT Hub every <em>2</em> seconds.</p>
+
+<div><pre><code class="language-text">12/9/2019 5:48:07 PM &gt; Sending message: {&quot;temperature&quot;:33.89822140284731,&quot;humidity&quot;:78.34939097908763,&quot;pressure&quot;:1024.9467544610131,&quot;latitude&quot;:40.020042418755764,&quot;longitude&quot;:-98.41923808825841}
+12/9/2019 5:48:09 PM &gt; Sending message: {&quot;temperature&quot;:27.475786026323114,&quot;humidity&quot;:64.4175510594703,&quot;pressure&quot;:1020.6866468579678,&quot;latitude&quot;:40.2089999240047,&quot;longitude&quot;:-98.26223221770334}
+12/9/2019 5:48:11 PM &gt; Sending message: {&quot;temperature&quot;:34.63600901637041,&quot;humidity&quot;:60.95207713588703,&quot;pressure&quot;:1013.6262313688063,&quot;latitude&quot;:40.25499096898331,&quot;longitude&quot;:-98.51199886959347}</code></pre></div></li>
+<li><p>Within the <strong>Terminal</strong> pane, to exit the simulated device app, press <strong>Ctrl-C</strong>.</p></li>
+<li><p>Switch to each of your Visual Studio Code windows and use the <strong>Terminal</strong> prompt to close the simulated device apps.</p></li>
+<li><p>Switch the Azure portal window.</p></li>
+<li><p>Close the <strong>Device twin</strong> blade.</p></li>
+<li><p>On the <strong>sensor-thl-2000</strong> blade, click <strong>Device Twin</strong>.</p></li>
+<li><p>Scroll down to locate the JSON for the <code>properties.reported</code> object.</p>
+
+<p>This contains the state reported by the device.</p></li>
+<li><p>Notice that the <code>telemetryDelay</code> property exists here as well, and that it has also been set to <code>2</code>.</p>
+
+<p>There is also a <code>$metadata</code> value that shows you when the <code>reported</code> values were last updated.</p></li>
+<li><p>Again close the <strong>Device twin</strong> blade.</p></li>
+<li><p>Close the <strong>sensor-thl-2000</strong> blade, and then navigate back to your Azure portal Dashboard.</p></li>
+</ol>
+
+<h3 id="toc_19">Exercise 6: Deprovision a single device from the Group Enrollment</h3>
+
+<p>There are many reasons why you might need to deprovision just a portion of the devices that are registered as part of a group enrollment. For example, a device may no longer be needed, a newer version of the device may have become available, or it may have been broken or compromised.</p>
+
+<p>To deprovision a single device from an enrollment group, you must do two things:</p>
+
+<ul>
+<li><p>Create a disabled individual enrollment for the device&#39;s leaf (device) certificate.</p>
+
+<p>This revokes access to the provisioning service for that device while still permitting access for other devices that have the enrollment group&#39;s signing certificate in their chain. Note that you should not delete the disabled individual enrollment for the device, as doing so would allow the device to re-enroll through the enrollment group.</p></li>
+<li><p>Disable or delete the device from the IoT hub&#39;s identity registry.</p>
+
+<p>If your solution includes multiple IoT hubs, you should use the list of provisioned devices for the enrollment group to find the IoT hub that the device was provisioned to (so that you can disable or delete the device). In this case you have a single IoT hub, so you don&#39;t need to look up which IoT hub was used.</p></li>
+</ul>
+
+<p>In this exercise, you will deprovision a single device from an enrollment group.</p>
+
+<h4 id="toc_20">Task 1: Create a disabled individual enrollment for the device.</h4>
+
+<p>In this task, you will use the <strong>sensor-thl-2001</strong> device for the individual enrollment.</p>
+
+<ol>
+<li><p>If necessary, log in to your Azure portal using your Azure account credentials.</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>On the Azure portal toolbar, click <strong>Cloud Shell</strong></p>
+
+<p>The Azure portal toolbar runs across the top of the portal window. The Cloud Shell button is the 6th in from the right.</p></li>
+<li><p>Verify that the Cloud Shell is using <strong>Bash</strong>.</p>
+
+<p>The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is <strong>Bash</strong>.</p></li>
+<li><p>At the Cloud Shell command prompt, to navigate to the <code>~/certificates</code> directory, enter the following command:</p>
+
+<div><pre><code class="language-bash">cd ~/certificates</code></pre></div></li>
+<li><p>To download the .pem device certificates from the Cloud Shell to your local machine, enter the following commands:</p>
+
+<div><pre><code class="language-bash">download ~/certificates/certs/sensor-thl-2001-device.cert.pem</code></pre></div></li>
+<li><p>Switch to your Azure Dashboard.</p></li>
+<li><p>On your Resources tile, click <strong>dps-az220-training-{your-id}</strong>.</p></li>
+<li><p>On the left-side menu of your DPS blade, under <strong>Settings</strong>, click <strong>Manage enrollments</strong>.</p></li>
+<li><p>On the <strong>Manage enrollments</strong> pane, click <strong>Add individual enrollment</strong>.</p></li>
+<li><p>On the <strong>Add Enrollment</strong> blade, under <strong>Mechanism</strong>, ensure that <strong>X.509</strong> is selected.</p></li>
+<li><p>Under <strong>Primary Certificate .pem or .cer file</strong>, click <strong>Open</strong>.</p></li>
+<li><p>In the <strong>Open</strong> dialog, navigate to the downloads folder.</p></li>
+<li><p>In the downloads folder, click <strong>sensor-thl-2001-device.cert.pem</strong>, and then click <strong>Open</strong>.</p></li>
+<li><p>On the <strong>Add Enrollment</strong> blade, under <strong>IoT Hub Device ID</strong>, enter <strong>sensor-thl-2001</strong></p></li>
+<li><p>Under <strong>Enable entry</strong>, click <strong>Disable</strong>.</p></li>
+<li><p>At the top of the blade, click <strong>Save</strong>.</p></li>
+<li><p>Navigate back to your Azure Dashboard.</p></li>
+</ol>
+
+<h4 id="toc_21">Task 2: Deregister the device from IoT hub</h4>
+
+<ol>
+<li><p>On the Resources tile, click <strong>iot-az220-training-{your-id}</strong>.</p></li>
+<li><p>On the left-side mnu of your IoT hub blade, under <strong>Device management</strong>, click <strong>Devices</strong>.</p></li>
+<li><p>On the <strong>IoT devices</strong> pane, under <strong>DEVICE ID</strong>, locate the <strong>sensor-thl-2001</strong> device.</p></li>
+<li><p>To the loft of <strong>sensor-thl-2001</strong>, click the checkbox.</p></li>
+<li><p>At the top of the <strong>IoT devices</strong> pane, click <strong>Delete</strong>, and then click <strong>Yes</strong>.</p></li>
+</ol>
+
+<h4 id="toc_22">Task 3: Confirm that the device is deprovisioned</h4>
+
+<ol>
+<li><p>Switch to the Visual Studio Code window containing your ContainerDevice2004 code project.</p>
+
+<p>If you closed Visual Studio Code after the previous exercise, use Visual Studio Code to open the ContainerDevice2004 folder.</p></li>
+<li><p>On the <strong>View</strong> menu, click <strong>Terminal</strong>.</p></li>
+<li><p>Ensure that the command prompt is located at the <strong>ContainerDevice2001</strong> folder location.</p></li>
+<li><p>To begin running the simulated device app, enter the following command:</p>
+
+<div><pre><code class="language-cmd/sh">dotnet run</code></pre></div></li>
+<li><p>Notice the exceptions listed when the device attempts to provision.</p>
+
+<p>When a device attempts to connect and authenticate with Device Provisioning Service, the service first looks for an individual enrollment that matches the device&#39;s credentials. The service then searches enrollment groups to determine whether the device can be provisioned. If the service finds a disabled individual enrollment for the device, it prevents the device from connecting. The service prevents the connection even if an enabled enrollment group for an intermediate or root CA in the device&#39;s certificate chain exists.</p>
+
+<p>When the application attempts to use the configured X.509 certificate to connect to DPS, DPS reports DeviceRegistrationResult.Status is NOT &#39;Assigned&#39;.</p>
+
+<div><pre><code class="language-txt">Found certificate: 13F32448E03F451E897B681758BAC593A60BFBFA CN=sensor-thl-2001; PrivateKey: True
+Using certificate 13F32448E03F451E897B681758BAC593A60BFBFA CN=sensor-thl-2001
+ProvisioningClient AssignedHub: ; DeviceID:
+Unhandled exception. System.Exception: DeviceRegistrationResult.Status is NOT &#39;Assigned&#39;
+at ContainerDevice.Program.ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security) in C:\Users\howdc\Allfiles\Labs\06-Automatic Enrollment of Devices
+in DPS\Final\ContainerDevice2004\Program.cs:line 107
+at ContainerDevice.Program.Main(String[] args) in C:\Users\howdc\Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Final\ContainerDevice2004\Program.cs:line 49
+at ContainerDevice.Program.&lt;Main&gt;(String[] args)</code></pre></div>
+
+<p>If you were to go back into your Azure portal and either enable the individual enrollment or delete the individual enrollment, the device will once again be able to authenticate with DPS and connect to IoT hub. If the individual enrollment is deleted, the device is automatically added back to the group enrollment.</p></li>
+</ol>
+
+<h3 id="toc_23">Exercise 7: Deprovision the Group Enrollment</h3>
+
+<p>In this exercise, you will deprovision the full enrollment group. Again, this includes disenrolling from Device Provisioning Service and deregistering the devices from IoT Hub.</p>
+
+<h4 id="toc_24">Task 1: Disenroll the enrollment group from the DPS</h4>
+
+<p>In this task, you will delete your Enrollment Group, which will remove the enrolled devices.</p>
+
+<ol>
+<li><p>Navigate to your Azure Dashboard.</p></li>
+<li><p>On your Resources tile, click <strong>dps-az220-training-{your-id}</strong>.</p></li>
+<li><p>On the left-side menu of your DPS blade, under <strong>Settings</strong>, click <strong>Manage enrollments</strong>.</p></li>
+<li><p>In the list of <strong>Enrollment Groups</strong>, under <strong>GROUP NAME</strong>, click <strong>eg-test-simulated-devices</strong>.</p></li>
+<li><p>On the <strong>Enrollment Group Details</strong> blade, scroll down to locate the <strong>Enable entry</strong> field, and then click <strong>Disable</strong>.</p>
+
+<p>Disabling the Group Enrollment within DPS allows you to temporarily disable devices within this Enrollment Group. This provides a temporary list of the X.509 certificate that should not be used by these devices.</p></li>
+<li><p>At the top of the blade, click <strong>Save</strong>.</p>
+
+<p>If you run one of your simulated devices now, you will see an error message similar to what you saw with the disabled individual enrollment.</p>
+
+<p>To permanently delete the Enrollment Group, you must delete the enrollment group from DPS.</p></li>
+<li><p>On the <strong>Manage enrollments</strong> pane, under <strong>GROUP NAME</strong>, select the check box to the left of <strong>eg-test-simulated-devices</strong>.</p>
+
+<p>If the check box to the left of <strong>simulated-devices</strong> was already checked, leave it checked.</p></li>
+<li><p>At the top of the <strong>Manage enrollments</strong> pane, click <strong>Delete</strong>.</p></li>
+<li><p>When prompted to confirm the action to <strong>Remove enrollment</strong>, click <strong>Yes</strong>.</p>
+
+<p>Once deleted, the Group Enrollment is completely removed from DPS, and would need to be recreated to add it back.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  If you delete an enrollment group for a certificate, devices that have the certificate in their certificate chain might still be able to enroll if a different, enabled enrollment group still exists for the root certificate or another intermediate certificate higher up in their certificate chain.</p>
+</blockquote></li>
+<li><p>Navigate back to your Azure portal Dashboard</p></li>
+</ol>
+
+<h4 id="toc_25">Task 2: Deregister the devices from the IoT Hub</h4>
+
+<p>Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully deprovision the devices, you will need to remove that registration as well.</p>
+
+<ol>
+<li><p>On your Resources tile, click <strong>iot-az220-training-{your-id}</strong>.</p></li>
+<li><p>On the left-side menu of your IoT hub blade, under <strong>Device management</strong>, click <strong>Devices</strong>.</p></li>
+<li><p>Notice that the device IDs for <strong>sensor-thl-2000</strong> and the other group enrolled devices still exist within the Azure IoT Hub device registry.</p></li>
+<li><p>To remove the sensor-thl-2000 device, select the check box to the left of <strong>sensor-thl-2000</strong>, then click <strong>Delete</strong>.</p></li>
+<li><p>When prompted with &quot;<em>Are you certain you wish to delete selected device(s)</em>&quot;, click <strong>Yes</strong>.</p></li>
+<li><p>Repeat the steps 4-5 above to remove the sensor-thl-2001 device.</p></li>
+</ol>
+
+<h4 id="toc_26">Task 3: Confirm that your devices have been deprovisioned</h4>
+
+<p>With the group enrollment deleted from the Device Provisioning Service, and the device deleted from the Azure IoT Hub device registry, the device(s) have been fully removed from the solution.</p>
+
+<ol>
+<li><p>Switch to the Visual Studio Code window containing your ContainerDevice code project.</p>
+
+<p>If you closed Visual Studio Code after the previous exercise, use Visual Studio Code to open the lab 6 Final folder.</p></li>
+<li><p>On the Visual Studio Code <strong>View</strong> menu, click <strong>Terminal</strong>.</p></li>
+<li><p>Ensure that the command prompt is located at the <strong>ContainerDevice</strong> folder location.</p></li>
+<li><p>To begin running the simulated device app, enter the following command:</p>
+
+<div><pre><code class="language-cmd/sh">dotnet run</code></pre></div></li>
+<li><p>Notice the exceptions listed when the device attempts to provision.</p>
+
+<p>Now that the group enrollment and registered device have been deleted, the simulated device will no longer be able to provision or connect. When the application attempts to use the configured X.509 certificate to connect to DPS, it will return a <code>ProvisioningTransportException</code> error message.</p>
+
+<div><pre><code class="language-txt">Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
+Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
+RegistrationID = sensor-thl-2000
+ProvisioningClient RegisterAsync . . . Unhandled exception. Microsoft.Azure.Devices.Provisioning.Client.ProvisioningTransportException: {&quot;errorCode&quot;:401002,&quot;trackingId&quot;:&quot;df969401-c766-49a4-bab7-e769cd3cb585&quot;,&quot;message&quot;:&quot;Unauthorized&quot;,&quot;timestampUtc&quot;:&quot;2019-12-20T21:30:46.6730046Z&quot;}
+   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.ValidateOutcome(Outcome outcome)
+   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterDeviceAsync(AmqpClientConnection client, String correlationId, DeviceRegistration deviceRegistration)
+   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterAsync(ProvisioningTransportRegisterMessage message, CancellationToken cancellationToken)</code></pre></div></li>
+</ol>
+
+<p>You have completed the registration, configuration, and deprovisioning as part of the IoT devices life cycle with Device Provisioning Service.</p>
+
+
+
+
+</body>
+
+</html>

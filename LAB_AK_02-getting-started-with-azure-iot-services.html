@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>LAB_AK_02-getting-started-with-azure-iot-services</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<blockquote>
+<div><pre><code class="language-none">title: &#39;Lab 02: Getting Started with Azure IoT Services&#39;
+module: &#39;Module 1: Introduction to IoT and Azure IoT Services&#39;</code></pre></div>
+</blockquote>
+
+<h1 id="toc_0">Getting Started with Azure IoT Services</h1>
+
+<h2 id="toc_1">Lab Scenario</h2>
+
+<p>You are an Azure IoT Developer working for Contoso, a company that crafts and distributes gourmet cheeses.</p>
+
+<p>You have been tasked with exploring Azure and the Azure IoT services that you will using to develop Contoso&#39;s IoT solution. You have already become familiar with the Azure portal and created a resource group for your project. Now you need to begin investigating the Azure IoT services.</p>
+
+<h2 id="toc_2">In This Lab</h2>
+
+<p>In this lab, you will create and examine an Azure IoT Hub and an IoT Hub Device Provisioning Service. The lab includes the following exercises:</p>
+
+<ul>
+<li>Explore Globally Unique Resource Naming Requirements</li>
+<li>Create an IoT Hub using the Azure portal</li>
+<li>Examine features of the IoT Hub service</li>
+<li>Create a Device Provisioning Service and link it to your IoT Hub</li>
+<li>Examine features of the Device Provisioning Service</li>
+</ul>
+
+<h2 id="toc_3">Lab Instructions</h2>
+
+<h3 id="toc_4">Exercise 1: Explore Globally Unique Resource Naming Requirements</h3>
+
+<p>In labs 2-19 of this course, you will be creating and configuring the Azure resources that are used to develop your IoT solution. To ensure consistency across the labs and to help in tidying up resources when you are finished with them, suggested resource names will be provided within the lab instructions. As much as possible, the suggested resource names will follow the naming guidelines recommended here: <a href="https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging">Recommended naming and tagging conventions</a>. However, many of the resources that you will create during this course expose services that can be consumed across the web, which means that they must have globally unique names. To ensure that these resources satisfy the globally unique requirement, you will be adding a unique identifier to the end of the resource names when needed.</p>
+
+<p>In this exercise, you will create your unique ID and review some examples that help to illustrate how you will use your unique ID during labs 2-19 of this course.</p>
+
+<h4 id="toc_5">Task 1: Create Your Unique ID</h4>
+
+<ol>
+<li><p>Construct your unique ID by using your lower-case initials and the current date in the following pattern:</p>
+
+<div><pre><code class="language-text">YourInitialsYYMMDD</code></pre></div>
+
+<p>The first part of your unique ID will be your initials in lower-case. The second part will be the last two digits of the current year, the current numeric month, and the current numeric day. Here are some examples:</p>
+
+<div><pre><code class="language-text">gwb200123
+bho200504
+cah201216
+dm200911</code></pre></div>
+
+<p>Within the lab instructions, you will see <code>{your-id}</code> listed as part of the suggested resource name whenever you need to enter your unique ID. The <code>{your-id}</code> portion of the suggested resource name is a placeholder. You will replace the entire placeholder string (including the <code>{}</code>) with your unique value.</p></li>
+<li><p>Make a note of your unique ID now and then <strong>use the same value through the entire course</strong>.</p>
+
+<blockquote>
+<p><strong>Note</strong>: Don&#39;t change the date portion of your unique ID each day. Use the same unique ID each day of the course.</p>
+</blockquote></li>
+</ol>
+
+<h4 id="toc_6">Task 2: Review How and When to Apply Your Unique ID</h4>
+
+<p>Many of the resources that you create during the labs in this course will have publicly-addressable (although secured) endpoints and therefore must be globally unique. Examples of resources that require globally unique names include IoT Hubs, Device Provisioning Services, and Azure Storage Accounts.</p>
+
+<p>As noted above, when you create these types of resources, you will be provided with a resource name that follows suggested guidelines and you will be instructed to include your unique ID as part of the resource name. To help clarify when you need to enter your unique ID, the suggested resource name will include a placeholder value for your unique ID. You will be instructed to replace the placeholder value, <code>{your-id}</code>, with your unique ID.</p>
+
+<ol>
+<li><p>Review the following resource naming examples:</p>
+
+<p>If your Unique ID is: <strong>cah191216</strong></p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Resource Type</th>
+<th style="text-align: left">Name Template</th>
+<th style="text-align: left">Example</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td style="text-align: left">IoT Hub</td>
+<td style="text-align: left">iot-az220-training-{your-id}</td>
+<td style="text-align: left">iot-az220-training-cah191216</td>
+</tr>
+<tr>
+<td style="text-align: left">Device Provisioning Service</td>
+<td style="text-align: left">dps-az220-training-{your-id}</td>
+<td style="text-align: left">dps-az220-training-cah191216</td>
+</tr>
+<tr>
+<td style="text-align: left">Azure Storage Account <br/>(name must be lower-case and no dashes)</td>
+<td style="text-align: left">az220storage{your-id}</td>
+<td style="text-align: left">az220storagecah191216</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Review the following example for applying your unique ID within a Bash script:</p>
+
+<p>In some of the labs later in this course, you will be instructed to apply your unique ID value within a Bash script. The Bash script file, which is provided for you, might include code that is similar to the following:</p>
+
+<div><pre><code class="language-bash">#!/bin/bash
+
+YourID=&quot;{your-id}&quot;
+RGName=&quot;rg-az220&quot;
+IoTHubName=&quot;iot-az220-training-$YourID&quot;</code></pre></div>
+
+<p>In the code above, if the value of your unique ID is <code>cah191216</code>, then the line containing <code>YourID=&quot;{your-id}&quot;</code> should be updated to <code>YourID=&quot;cah191216&quot;</code>.</p>
+
+<blockquote>
+<p><strong>Note</strong>: Notice that you do not change the <code>$YourID</code> value on the final code line. If it isn&#39;t <code>{your-id}</code> then don&#39;t replace it.</p>
+</blockquote></li>
+<li><p>Review the following example for applying your unique ID within C# code:</p>
+
+<p>In some of the labs later in this course, you will be instructed to apply your unique ID value within C# source files. The C# source code, which will be provided to you, might include a code section that looks similar to the following:</p>
+
+<div><pre><code class="language-csharp">private string _yourId = &quot;{your-id}&quot;;
+private string _rgName = &quot;rg-az220&quot;;
+private string _iotHubName = $&quot;iot-az220-training-{_yourId}&quot;;</code></pre></div>
+
+<p>In the code above, if the value of your unique ID is <code>cah191216</code>, then the line containing <code>private string _yourId = &quot;{your-id}&quot;;</code> should be updated to <code>private string _yourId = &quot;cah191216&quot;;</code></p>
+
+<blockquote>
+<p><strong>Note</strong>: Notice that you do not change the <code>_yourId</code> value on the final code line. Once again, if it isn&#39;t <code>{your-id}</code> then don&#39;t replace it.</p>
+</blockquote></li>
+<li><p>Notice that not all resource names require you to apply your unique ID.</p>
+
+<p>As you may have already considered, the Resource Group that you created in the previous lab did not include your unique ID value.</p>
+
+<p>Some resources, like the Resource Group, must have a unique name within your subscription, but the name does not need to be globally unique. Therefore, each student taking this course can use the resource group name: <strong>rg-az220</strong>. Of course this is only true if each student uses their own subscription, but that should be the case.</p></li>
+<li><p>Apply an additional <code>01</code> or <code>02</code> if it turns out that your unique ID isn&#39;t so unique.</p>
+
+<p>It could happen that two or more people with the same initials start the course on the same day. You may not know, unless the person is sitting next to you, until you create your IoT Hub in the next exercise. Azure will let you know if the suggested resource name, including your unique ID, isn&#39;t globally unique. In that case you will be instructed to update your unique ID by appending an additional <code>##</code> value. For example, if the value of your unique ID is <code>cah191216</code>, your updated unique ID value could become:</p>
+
+<div><pre><code class="language-text">cah20121600
+cah20121601
+cah20121602
+...
+cah20121699</code></pre></div>
+
+<p>If you do have to update your unique ID, try to use it consistently.</p></li>
+</ol>
+
+<h3 id="toc_7">Exercise 2: Create an IoT Hub using the Azure portal</h3>
+
+<p>The Azure IoT Hub is a fully managed service that enables reliable and secure bidirectional communications between IoT devices and Azure. The Azure IoT Hub service provides the following:</p>
+
+<ul>
+<li>Establish bidirectional communication with billions of IoT devices</li>
+<li>Multiple device-to-cloud and cloud-to-device communication options, including one-way messaging, file transfer, and request-reply methods.</li>
+<li>Built-in declarative message routing to other Azure services.</li>
+<li>A queryable store for device metadata and synchronized state information.</li>
+<li>Secure communications and access control using per-device security keys or X.509 certificates.</li>
+<li>Extensive monitoring for device connectivity and device identity management events.</li>
+<li>SDK device libraries for the most popular languages and platforms.</li>
+</ul>
+
+<p>There are several methods that you can use to create an IoT Hub. For example, you can create an IoT Hub resource using the Azure portal, or you can create an IoT Hub (and other resources) programmatically. During this course you will be investigating various methods that can be used to create and manage Azure resources, including Azure CLI and Bash scripts.</p>
+
+<p>In this exercise, you will use the Azure portal to create and configure your IoT Hub.</p>
+
+<h4 id="toc_8">Task 1: Use the Azure portal to create a resource (IoT Hub)</h4>
+
+<ol>
+<li><p>In the lab virtual machine environment, open a Microsoft Edge browser window, and then navigate to the Azure portal using the following Web address:</p>
+
+<p>+++http://portal.azure.com+++</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Whenever you see the green &quot;T&quot; symbol, for example +++enter this text+++, you can click the associated text and the information will be typed into the current field within the virtual machine environment.</p>
+</blockquote></li>
+<li><p>When prompted to Sign in using Azure account credentials, enter the Azure credentials that you are using for this course.</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>Notice that the AZ-220 dashboard that you created in the previous lab has been loaded.</p>
+
+<p>You will be adding resources to your dashboard as the course continues.</p></li>
+<li><p>On the Azure portal menu, click <strong>+ Create a resource</strong>.</p>
+
+<p>The <strong>New</strong> blade that opens is a front-end to the Azure Marketplace, which is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.</p></li>
+<li><p>In the Search textbox, type <strong>iot hub</strong> and then press <strong>Enter</strong>.</p>
+
+<p>The <strong>Marketplace</strong> blade will open to display the available services matching your search criteria.</p>
+
+<blockquote>
+<p><strong>Note</strong>: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft Azure free credit offerings. You will be using Microsoft provided resources during the labs in this course.</p>
+</blockquote></li>
+<li><p>On the <strong>Marketplace</strong> blade, click the <strong>IoT Hub</strong> search result.</p>
+
+<blockquote>
+<p><strong>Note</strong>:
+A <strong>Create</strong> action is shown at the bottom of the <strong>IoT Hub</strong> search result - that will navigate directly to the IoT Hub creation view. In normal use you may chose to click this - for the purpose of the tutorial, click anywhere in the main body of the <strong>IoT Hub</strong> search result.</p>
+</blockquote></li>
+<li><p>On the <strong>IoT Hub</strong> blade, click <strong>Usage Information + Support</strong></p>
+
+<p>Under <strong>Useful Links</strong>, notice the list of resource links.</p>
+
+<p>There is no need to explore these links now, but it&#39;s worth noting that they are available. The <em>Documentation</em> link, for example, takes you to the root page for IoT Hub resources and documentation. You can use this page to review the most up-to-date Azure IoT Hub documentation and explore additional resources that are outside the scope of this course. You will be referred to the docs.microsoft.com site throughout this course for additional reading on specific topics.</p>
+
+<p>If you opened one of the links, close it now and use your browser to navigate back to the Azure portal tab.</p></li>
+</ol>
+
+<h4 id="toc_9">Task 2: Create an IoT Hub with required property settings</h4>
+
+<ol>
+<li><p>To begin the process of creating your new IoT Hub, click <strong>Create</strong>.</p>
+
+<blockquote>
+<p><strong>Tip:</strong> In the future, there are two other ways to get to the <em>Create</em> experience of any Azure resource type:</p>
+
+<ol>
+<li>If you have the service in your Favorites, you can click the service to navigate to the list of instances, then click the <em>+ Add</em> button at the top.</li>
+<li>You can search for the service name in the <em>Search</em> box at the top of the portal to get to the list of instances, then click the <em>+ Add</em> button at the top.</li>
+</ol>
+</blockquote>
+
+<p>The following steps walk you through the settings required to create your IoT Hub, explaining each of the fields as you fill them in.</p></li>
+<li><p>On the <strong>IoT hub</strong> blade, in the <strong>Subscription</strong> dropdown, ensure that the Azure subscription that you intend to use for this course is selected.</p>
+
+<p>The <em>Basics</em> tab that is selected initially contains uninitialized fields that you are required to fill in, but there are settings on other tabs that you will need to be familiar with as well.</p></li>
+<li><p>To the right of <strong>Resource group</strong>, open the dropdown, and then click <strong>rg-az220</strong></p>
+
+<p>This is the resource group that you created in the previous lab. You will be grouping the resources that you create for this course together in the same resource group. It is best practice to group related resources in this way, and will help you to clean up your resources when you no longer need them.</p></li>
+<li><p>To the right of <strong>IoT hub name</strong>, enter a globally unique name for your IoT Hub as follows:</p>
+
+<p>To provide a globally unique name, enter <strong>iot-az220-training-{your-id}</strong> (remember to replace <strong>{your-id}</strong> with the unique ID you created in Exercise 1).</p>
+
+<p>For example: <strong>iot-az220-training-cah191216</strong></p>
+
+<p>The name of your IoT Hub must be globally unique because it is a publicly accessible resource that you must be able to access from any of your IP enabled IoT devices.</p>
+
+<p>Consider the following when you specify a unique name for your new IoT Hub:</p>
+
+<ul>
+<li><p>The value that you apply to <strong>IoT hub name</strong> must be unique across all of Azure. This is true because the value assigned to the name will be used in the IoT Hub&#39;s connection string. Since Azure enables you to connect devices from anywhere in the world to your hub, it makes sense that all Azure IoT hubs must be accessible from the Internet using the connection string and that connection strings must therefore be unique. You will explore connection strings later in this lab.</p></li>
+<li><p>The value that you assign to <strong>IoT hub name</strong> cannot be changed once your resource has been created. If you do need to change the name, you&#39;ll need to create a new IoT Hub with the desired name, re-register your devices from the original hub and register them with the new one, and delete your old IoT Hub.</p></li>
+<li><p>The <strong>IoT hub name</strong> field is a required field.</p></li>
+</ul>
+
+<blockquote>
+<p><strong>Note</strong>:  Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display a message below the name field as a warning. If you see the warning message, you should update your unique ID. Try appending your unique ID with &#39;<strong>00</strong>&#39;, or &#39;<strong>01</strong>&#39;, or &#39;<strong>02</strong>, &#39;etc. as necessary to achieve a globally unique name.</p>
+
+<p><strong>Note</strong>: Some resource names do not allow extended characters like the dash (-) or underscore (_), so stick with numeric digits when updating your unique ID.</p>
+</blockquote></li>
+<li><p>To the right of <strong>Region</strong>, open the drop-down list and select the same region that you selected for your resource group.</p>
+
+<blockquote>
+<p><strong>Note</strong>: One of the upcoming labs will use Event Grid. To support this future lab, you need to select a Region that supports Event Grid. For the current list of regions that support Event Grid, see the following link: <a href="https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&amp;regions=all">Products available by region</a></p>
+</blockquote>
+
+<p>As you saw previously, Azure is supported by a series of datacenters that are placed in regions all around the world. When you create something in Azure, you deploy it to one of these datacenter locations.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  When picking a region to host your resources, keep in mind that picking a region close to your end users will decrease load/response times. In a production environment, if you are on the other side of the world from your end users, you should not be picking the region nearest you.</p>
+</blockquote></li>
+<li><p>At the top of the blade, click <strong>Management</strong>.</p>
+
+<p>Take a minute to review the fields and other information presented on this tab.</p></li>
+<li><p>To the right of <strong>Pricing and scale tier</strong>, ensure that <strong>S1: Standard tier</strong> is selected.</p>
+
+<p>Azure IoT Hub provides several tier options depending on how many features you require and how many messages you need to send within your solution per day. The <em>S1</em> tier that you are using in this course allows a total of 400,000 messages per unit per day and provides the all of the services that are required in this training. You won&#39;t actually need 400,000 messages per unit per day, but you will be using features provided by the Standard tier, such as <em>Cloud-to-device commands</em>, <em>Device management</em>, and <em>IoT Edge</em>. IoT Hub also offers a Free tier that is meant for testing and evaluation. It has the same capabilities as the Standard tier, but limited messaging allowances. It is important to note that you cannot upgrade from the Free tier to either Basic or Standard. The Free tier allows 500 devices to be connected to the IoT hub and up to 8,000 messages per day. Each Azure subscription can create one IoT Hub in the Free tier.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  The <em>S1 - Standard</em> tier has a cost of $25.00 USD per month per unit. You will be specifying 1 unit. For details about the other tier options, see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling">Choosing the right IoT Hub tier for your solution</a>.</p>
+</blockquote></li>
+<li><p>To the right of <strong>Number of S1 IoT hub units</strong>, ensure that <strong>1</strong> is selected.</p>
+
+<p>As mentioned above, the pricing tier that you choose establishes the number of messages that your hub can process per unit per day. To increase the number of messages that your hub can process without moving to a higher pricing tier, you can increase the number of units. For example, if you want your IoT hub to support ingress of up to 800,000 messages per day, you could specify <em>two</em> S1 tier units. For this course you will be using just 1 unit.</p></li>
+<li><p>To the right of <strong>Defender for IoT</strong>, ensure that <strong>Off</strong> is selected.</p>
+
+<p>Azure Defender for IoT is a unified security solution for identifying IoT/OT devices, vulnerabilities, and threats. It enables you to secure your entire IoT/OT environment, whether you need to protect existing IoT/OT devices or build security into new IoT innovations.</p>
+
+<blockquote>
+<p><strong>TIP</strong>:
+<strong>Azure Defender for IoT</strong> was formerly known as <strong>Azure Security Center</strong> and you may still see places in Azure, and in this content, where the name has not yet been updated.</p>
+</blockquote>
+
+<p>Azure Defender for IoT is on by default because security is important to your IoT solution. You will be exploring Azure Defender for IoT in Lab 19 of this course. Disabling it for now ensures that the Lab 19 instructions work as expected.</p>
+
+<p>Currently, you can enable Azure Defender at the subscription level, through the Azure portal. Azure Defender is free for the first 30 days. Any usage beyond 30 days will be automatically  charged as per the pricing information detailed <a href="https://azure.microsoft.com/en-us/pricing/details/azure-defender/">here</a>.</p></li>
+<li><p>Review the table that summarizes the current settings and costs.</p></li>
+<li><p>Under <strong>Advanced Settings</strong>  (you may need to scroll down), ensure that <strong>Device-to-cloud partitions</strong> is set to <strong>4</strong>.</p>
+
+<p>The number of partitions relates the device-to-cloud messages to the number of simultaneous readers of these messages. Most IoT hubs will only need four partitions, which is the default value. For this course you will create your IoT Hub using the default number of partitions.</p></li>
+<li><p>Within the <strong>Transport Layer Security (TLS)</strong> section, ensure the <strong>Minimum TLS Version</strong> is set to <strong>1.0</strong>.</p>
+
+<p>IoT Hub uses Transport Layer Security (TLS) to secure connections from IoT devices and services. Two versions of the TLS protocol are currently supported, namely versions 1.0 and 1.2.</p>
+
+<blockquote>
+<p>[!Important]
+The <strong>Minimum TLS Version</strong> property cannot be changed once your IoT Hub resource is created. It is therefore essential that you properly test and validate that all your IoT devices and services are compatible with TLS 1.2 and the recommended ciphers in advance. You can learn more about IoT Hub and TLS below:
+* <a href="https://docs.microsoft.com/azure/iot-hub/iot-hub-tls-support">Transport Layer Security (TLS) support in IoT Hub</a></p>
+</blockquote></li>
+<li><p>At the bottom of the blade, click <strong>Review + create</strong>.</p>
+
+<p>Take a minute to review the settings that your provided.</p></li>
+<li><p>At the bottom of the blade, to finalize the creation of your IoT Hub, click <strong>Create</strong>.</p>
+
+<p>Deployment can take a minute or more to complete. You can open the Azure portal Notification pane to monitor progress.</p></li>
+<li><p>Notice that after a couple of minutes you receive a notification stating that your IoT Hub was successfully deployed to your <strong>rg-az220</strong> resource group.</p></li>
+<li><p>On the Azure portal menu, click <strong>Dashboard</strong>, and then click <strong>Refresh</strong>.</p>
+
+<p>You should see that your resource group tile lists your new IoT Hub.</p></li>
+</ol>
+
+<h3 id="toc_10">Exercise 3: Examine the IoT Hub Service</h3>
+
+<p>As you have already learned, IoT Hub is a managed service, hosted in the cloud, that acts as a central message hub for bi-directional communication between your Azure IoT services and your connected devices.</p>
+
+<p>IoT Hub&#39;s capabilities help you build scalable, full-featured IoT solutions such as managing industrial equipment used in manufacturing, tracking valuable assets in healthcare, monitoring office building usage, and many more scenarios. IoT Hub monitoring helps you maintain the health of your solution by tracking events such as device creation, device failures, and device connections.</p>
+
+<p>In this exercise, you will examine some of the features that IoT Hub provides.</p>
+
+<h4 id="toc_11">Task 1: Explore the IoT Hub Overview information</h4>
+
+<ol>
+<li><p>If you closed your Azure portal window, open a Microsoft Edge browser window, and then navigate to the Azure portal:</p>
+
+<p>+++http://portal.azure.com+++</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>Verify that your AZ-220 dashboard is being displayed.</p></li>
+<li><p>On the <strong>rg-az220</strong> resource group tile, click <strong>iot-az220-training-{your-id}</strong></p>
+
+<p>When you first open your IoT Hub blade, the <strong>Overview</strong> information will be displayed. As you can see, the area at the top of this blade provides some essential information about your IoT Hub service, such as datacenter location and subscription. But this blade also includes tiles that provide information about how you are using your hub and recent activities. Let&#39;s take a look at these tiles before exploring further.</p></li>
+<li><p>At the bottom-left of your IoT Hub blade, notice the <strong>IoT Hub Usage</strong> tile.</p>
+
+<blockquote>
+<p><strong>Note</strong>:  The tiles positions are based upon the width of the browser window, so the layout may be a little different than described.</p>
+</blockquote>
+
+<p>This tile provides a quick overview of what is connected to your hub and message count. As you add devices and start sending messages, this tile will provide nice &quot;at-a-glance&quot; information.</p></li>
+<li><p>To the right of the <strong>IoT Hub Usage</strong> tile, notice the <strong>Number of messages used</strong> tile and the <strong>Device to cloud messages</strong> tile.</p>
+
+<p>The <strong>Device to cloud messages</strong> tile provides a quick view of the incoming messages from your devices over time. You will be registering a device and sending messages to your hub during a module in the next module, so you will begin to see information on these tiles pretty soon.</p>
+
+<p>The <strong>Number of messages used</strong> tile can help you to keep track of the total number of messages used.</p></li>
+</ol>
+
+<h4 id="toc_12">Task 2: View features of IoT Hub using the left-side menu</h4>
+
+<ol>
+<li><p>On the IoT Hub blade, take a minute to scan the left-side menu options.</p>
+
+<p>As you would expect, these menu options are used to open panes that provide access to properties and features of your IoT Hub. For example, some panes provides access to devices that are connected to your hub.</p></li>
+<li><p>On the left-side menu, under <strong>Device management</strong>, click <strong>Devices</strong></p>
+
+<p>This pane can be used to add, modify, and delete devices registered to your hub. You will get pretty familiar with this pane by the end of this course.</p></li>
+<li><p>On the left-side menu, near the top, click <strong>Activity log</strong></p>
+
+<p>As the name implies, this pane gives you access to a log that can be used to review activities and diagnose issues. You can also define queries that help with routine tasks. Very handy.</p></li>
+<li><p>On the left-side menu, under <strong>Hub Settings</strong>, click <strong>Built-in endpoints</strong></p>
+
+<p>IoT Hub exposes &quot;endpoints&quot; that enable external connections. Essentially, an endpoint is anything connected to or communicating with your IoT Hub. You should see that your hub already has two endpoints defined:</p>
+
+<ul>
+<li><em>Events</em></li>
+<li><em>Cloud to device messaging</em></li>
+</ul></li>
+<li><p>On the left-side menu, under <strong>Hub Settings</strong>, click <strong>Message routing</strong></p>
+
+<p>The IoT Hub message routing feature enables you to route incoming device-to-cloud messages to service endpoints such as Azure Storage containers, Event Hubs, and Service Bus queues. You can also create routing rules to perform query-based routes.</p></li>
+<li><p>At the top of the <strong>Message routing</strong> pane, click <strong>Custom endpoints</strong>.</p>
+
+<p>Custom endpoints (such as Service Bus queue and Storage) are often used within an IoT implementation.</p></li>
+<li><p>Take a minute to scan through the menu options under <strong>Settings</strong></p>
+
+<blockquote>
+<p><strong>Note</strong>:  This lab exercise is only intended to be an introduction to the IoT Hub service and get you more comfortable with the UI, so don&#39;t worry if you feel a bit overwhelmed at this point. You will be configuring and managing your IoT Hub, devices, and their communications as this course continues.</p>
+</blockquote></li>
+</ol>
+
+<h3 id="toc_13">Exercise 4: Create a Device Provisioning Service using the Azure portal</h3>
+
+<p>The Azure IoT Hub Device Provisioning Service is a helper service for IoT Hub that enables zero-touch, just-in-time provisioning to the right IoT hub without requiring human intervention. The Device Provisioning Service provides the following:</p>
+
+<ul>
+<li>Zero-touch provisioning to a single IoT solution without hardcoding IoT Hub connection information at the factory (initial setup)</li>
+<li>Load balancing devices across multiple hubs</li>
+<li>Connecting devices to their owner&#39;s IoT solution based on sales transaction data (multitenancy)</li>
+<li>Connecting devices to a particular IoT solution depending on use-case (solution isolation)</li>
+<li>Connecting a device to the IoT hub with the lowest latency (geo-sharding)</li>
+<li>Reprovisioning based on a change in the device</li>
+<li>Rolling the keys used by the device to connect to IoT Hub (when not using X.509 certificates to connect)</li>
+</ul>
+
+<p>There are several methods that you can use to create an instance of the IoT Hub Device Provisioning Service. For example, you can use the Azure portal, which is what you will do in ths task. But you can also create a DPS instance using Azure CLI or an Azure Resource Manager Template.</p>
+
+<h4 id="toc_14">Task 1: Use the Azure portal to create a resource (Device Provisioning Service)</h4>
+
+<ol>
+<li><p>If you closed your Azure portal window, open a Microsoft Edge browser window, and then navigate to the Azure portal:</p>
+
+<p>+++http://portal.azure.com+++</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>On the Azure portal menu, click <strong>+ Create a resource</strong>.</p>
+
+<p>As you saw previously, the <strong>New</strong> blade provides you with the capability to search the Azure Marketplace for services.</p></li>
+<li><p>In the Search textbox, type <strong>device provisioning service</strong> and then press Enter.</p></li>
+<li><p>On the <strong>Marketplace</strong> blade, click <strong>IoT Hub Device Provisioning Service</strong> search result.</p>
+
+<blockquote>
+<p><strong>Note</strong>:
+A <strong>Create</strong> action is shown at the bottom of the <strong>IoT Hub Device Provisioning Service</strong> search result - that will navigate directly to the IoT Hub Device Provisioning Service creation view. In normal use you may chose to click this - for the purpose of the tutorial, click anywhere in the main body of the <strong>IoT Hub Device Provisioning Service</strong> search result.</p>
+</blockquote></li>
+<li><p>On the <strong>IoT Hub Device Provisioning Service</strong> blade, click <strong>Usage Information + Support</strong>.</p>
+
+<p>Under <strong>Useful links</strong>, notice the list of resource links.</p>
+
+<p>Again, there is no need to explore this documentation now, but is is good to know that it is available. The IoT Hub Device Provisioning Service Documentation page is the root page for DPS. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. You will be referred to the docs.microsoft.com site throughout this course for additional reading on specific topics.</p>
+
+<p>If you opened one of the links, close it now and use your browser to navigate back to the Azure portal tab.</p></li>
+</ol>
+
+<h4 id="toc_15">Task 2: Create a Device Provisioning Service with required property settings</h4>
+
+<ol>
+<li><p>To begin the process of creating your new DPS instance, click <strong>Create</strong>.</p>
+
+<p>Next, you need to specify information about the Hub and your subscription. The following steps walk you through the settings, explaining each of the fields as you fill them in.</p></li>
+<li><p>Under <strong>Subscription</strong>, ensure that the subscription you are using for this course is selected.</p></li>
+<li><p>Under <strong>Resource Group</strong>, open the dropdown, and then click <strong>rg-az220</strong></p>
+
+<p>You will be grouping the resources that you create for this course together in the same resource group. It&#39;s a best practice to group related resources in this way, and will help you to clean up your resources when you no longer need them.</p></li>
+<li><p>Under <strong>Name</strong>, enter a globally unique name for your IoT Hub Device Provisioning Service as follows:</p>
+
+<p>To provide a globally unique name, enter <strong>dps-az220-training-{your-id}</strong> (remember to replace <strong>{your-id}</strong> with the unique ID you created in Exercise 1).</p>
+
+<p>For example: <strong>dps-az220-training-cah191216</strong></p></li>
+<li><p>Under <strong>Region</strong>, open the drop-down list and select the same region that you selected for your resource group.</p>
+
+<blockquote>
+<p><strong>Note</strong>: When picking a datacenter to host your resources, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.</p>
+</blockquote></li>
+<li><p>At the bottom of the blade, click <strong>Review + Create</strong>. Once validation passes, click <strong>Create</strong>.</p>
+
+<p>Deployment can take a minute or more to complete. You can open the Azure portal Notification pane to monitor progress.</p></li>
+<li><p>Notice that after a couple of minutes you receive a notification stating that your IoT Hub Device Provisioning Service instance was successfully deployed to your <strong>rg-az220</strong> resource group.</p></li>
+<li><p>On the Azure portal menu, click <strong>Dashboard</strong>, and then click <strong>Refresh</strong>.</p>
+
+<p>You should see that your resource group tile lists your new IoT Hub Device Provisioning Service.</p></li>
+</ol>
+
+<h4 id="toc_16">Task 3: Link your IoT Hub and Device Provisioning Service.</h4>
+
+<ol>
+<li><p>Notice that the AZ-220 dashboard lists both your IoT Hub and DPS resources.</p>
+
+<p>You should see both your IoT Hub and DPS resources listed - (you may need to hit <strong>Refresh</strong> if the resources were only recently created)</p></li>
+<li><p>On the <strong>rg-az220</strong> resource group tile, click <strong>dps-az220-training-{your-id}</strong>.</p></li>
+<li><p>On the <strong>Device Provisioning Service</strong> blade, under <strong>Settings</strong>, click <strong>Linked IoT hubs</strong>.</p></li>
+<li><p>At the top of the blade, click <strong>+ Add</strong>.</p>
+
+<p>You will use the <strong>Add link to IoT hub</strong> blade to provide the information required to link your Device Provisioning service instance to an IoT hub.</p></li>
+<li><p>On the <strong>Add link to IoT hub</strong> blade, ensure that the <strong>Subscription</strong> dropdown is displaying the subscription that you are using for this course.</p>
+
+<p>The subscription is used to provide a list of the available IoT hubs.</p></li>
+<li><p>Open the IoT hub dropdown, and then click <strong>iot-az220-training-{your-id}</strong>.</p>
+
+<p>This is the IoT Hub that you created in the previous exercise.</p></li>
+<li><p>In the Access Policy dropdown, click <strong>iothubowner</strong>.</p>
+
+<p>The <em>iothubowner</em> credentials provide the permissions needed to establish the link with the specified IoT hub.</p></li>
+<li><p>To complete the configuration, click <strong>Save</strong>.</p>
+
+<p>You should now see the selected hub listed on the Linked IoT hubs pane. You might need to click <strong>Refresh</strong> to show Linked IoT hubs.</p></li>
+<li><p>On the Azure portal menu, click <strong>Dashboard</strong>.</p></li>
+</ol>
+
+<h3 id="toc_17">Exercise 5: Examine the Device Provisioning Service</h3>
+
+<p>The IoT Hub Device Provisioning Service is a helper service for IoT Hub that enables zero-touch, just-in-time provisioning to the right IoT hub without requiring human intervention, enabling customers to provision millions of devices in a secure and scalable manner.</p>
+
+<h4 id="toc_18">Task 1: Explore the Device Provisioning Service Overview information</h4>
+
+<ol>
+<li><p>If you closed your Azure portal window, open a Microsoft Edge browser window, and then navigate to the Azure portal:</p>
+
+<p>+++http://portal.azure.com+++</p>
+
+<p>If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.</p></li>
+<li><p>Verify that your AZ-220 dashboard is being displayed.</p></li>
+<li><p>On the <strong>rg-az220</strong> resource group tile, click <strong>dps-az220-training-{your-id}</strong></p>
+
+<p>When you first open your Device Provisioning Service instance, it will display the Overview information. As you can see, the area at the top of the blade provides some essential information about your DPS instance, such as status, datacenter location and subscription. This blade also provides the <em>Quick Links</em> section, which provide access to:</p>
+
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/iot-dps/">Azure IoT Hub Device Provisioning Service Documentation</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/iot-dps/about-iot-dps">Learn more about IoT Hub Device Provisioning Service</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/iot-dps/concepts-service">Device Provisioning concepts</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/iot-hub/">Pricing and scale details</a></li>
+</ul>
+
+<p>When time permits, you can come back and explore these links.</p></li>
+</ol>
+
+<h4 id="toc_19">Task 2: View features of Device Provisioning Service using the navigation menu</h4>
+
+<ol>
+<li><p>Take a minute to scan the left-side menu options.</p>
+
+<p>As you might expect, these options open panes that provide access to activity logs, properties and feature of the DPS instance.</p></li>
+<li><p>On the left-side menu, near the top, click <strong>Activity log</strong></p>
+
+<p>As the name implies, this pane gives you access to a log that can be used to review activities and diagnose issues. You can also define queries that help with routine tasks. Very handy.</p></li>
+<li><p>On the left-side menu, under <strong>Settings</strong>, click <strong>Quick Start</strong>.</p>
+
+<p>This pane lists the steps to start using the Iot Hub Device Provisioning Service, links to documentation and shortcuts to other blades for configuring DPS.</p></li>
+<li><p>On the left-side menu, under <strong>Settings</strong>, click <strong>Shared access policies</strong>.</p>
+
+<p>This pane provides management of access policies, lists the existing policies and the associated permissions.</p></li>
+<li><p>On the left-side menu, under <strong>Settings</strong>, click <strong>Linked IoT hubs</strong>.</p>
+
+<p>Here you can see the linked IoT Hub from earlier. The Device Provisioning Service can only provision devices to IoT hubs that have been linked to it. Linking an IoT hub to an instance of the Device Provisioning service gives the service read/write permissions to the IoT hub&#39;s device registry; with the link, a Device Provisioning service can register a device ID and set the initial configuration in the device twin. Linked IoT hubs may be in any Azure region. You may link hubs in other subscriptions to your provisioning service.</p></li>
+<li><p>On the left-side menu, under <strong>Settings</strong>, click <strong>Certificates</strong>.</p>
+
+<p>Here you can manage the X.509 certificates that can be used to secure your Azure IoT hub using the X.509 Certificate Authentication. You will investigate X.509 certificates in a later lab.</p></li>
+<li><p>On the left-side menu, under <strong>Settings</strong>, click <strong>Manage enrollments</strong>.</p>
+
+<p>Here you can manage the enrollment groups and individual enrollments.</p>
+
+<p>Enrollment groups can be used for a large number of devices that share a desired initial configuration, or for devices all going to the same tenant. An enrollment group is a group of devices that share a specific attestation mechanism. Enrollment groups support both X.509 as well as symmetric. All devices in the X.509 enrollment group present X.509 certificates that have been signed by the same root or intermediate Certificate Authority (CA). Each device in the symmetric key enrollment group present SAS tokens derived from the group symmetric key. The enrollment group name and certificate name must be alphanumeric, lowercase, and may contain hyphens.</p>
+
+<p>An individual enrollment is an entry for a single device that may register. Individual enrollments may use either X.509 leaf certificates or SAS tokens (from a physical or virtual TPM) as attestation mechanisms. The registration ID in an individual enrollment is alphanumeric, lowercase, and may contain hyphens. Individual enrollments may have the desired IoT hub device ID specified.</p></li>
+<li><p>Take a minute to review some of the other menu options under <strong>Settings</strong></p>
+
+<blockquote>
+<p><strong>Note</strong>:  This lab exercise is only intended to be an introduction to the IoT Hub Device Provisioning Service and get you more comfortable with the UI, so don&#39;t worry if you feel a bit overwhelmed at this point. You will be covering DPS in much more detail as the course continues.</p>
+</blockquote></li>
+</ol>
+
+
+
+
+</body>
+
+</html>
